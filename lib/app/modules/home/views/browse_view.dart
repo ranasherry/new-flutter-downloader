@@ -5,7 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 import 'package:get/get.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+
 import 'package:path_provider/path_provider.dart';
 import 'package:video_downloader/app/modules/home/controllers/tabs_controller.dart';
 import 'package:video_downloader/app/modules/home/views/myWebView.dart';
@@ -27,15 +27,6 @@ class BrowseView extends GetView<HomeController> {
       body: Obx(() => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                  width: SizeConfig.screenWidth,
-                  height:
-                      controller.googleAdsCTL.myBanner!.size.height.toDouble(),
-                  child: Center(
-                    child: AdWidget(
-                      ad: controller.googleAdsCTL.myBannerBrowseScreen!,
-                    ),
-                  )),
               verticalSpace(SizeConfig.blockSizeVertical),
               controller.isBrowsing.value
                   ? Container()
@@ -51,7 +42,7 @@ class BrowseView extends GetView<HomeController> {
 
                       ),
               verticalSpace(SizeConfig.blockSizeVertical),
-              controller.isBrowsing.value ? Container() : _nativeAd()
+              // controller.isBrowsing.value ? Container() : _nativeAd()
             ],
           )),
       floatingActionButton: Obx(() => controller.isBrowsing.value
@@ -223,7 +214,7 @@ class BrowseView extends GetView<HomeController> {
   Widget _selectApp(String name, String img, int index, int color) {
     return InkWell(
       onTap: () {
-        controller.googleAdsCTL.showInterstitialAd();
+        // controller.googleAdsCTL.showInterstitialAd();
         if (index == 0) {
           controller.isBrowsing.value = true;
           controller.searchTextCTL.text = "https://facebook.com/";
@@ -406,25 +397,5 @@ class BrowseView extends GetView<HomeController> {
     );
     print("thumbnail: $thumb");
     return thumb;
-  }
-
-  Widget _nativeAd() {
-    return Obx(() => controller.googleAdsCTL.isNativeOnBrowseLoaded.value
-        ? Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-                color: Colors.grey,
-                alignment: Alignment.center,
-                width: 320,
-                // height: 120,
-                height: 220,
-                //                 width: 500,
-                // height: 500,
-                // color: Colors.red,
-                margin: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 5),
-                child: AdWidget(
-                    ad: controller.googleAdsCTL.myNativeBrowseScreen!)),
-          )
-        : Container());
   }
 }

@@ -5,7 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 import 'package:get/get.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+
 import 'package:path_provider/path_provider.dart';
 import 'package:video_downloader/app/modules/home/controllers/tabs_controller.dart';
 import 'package:video_downloader/app/modules/home/views/myWebView.dart';
@@ -32,15 +32,6 @@ class HomeView extends GetView<HomeController> {
           child: Obx(() => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                      width: SizeConfig.screenWidth,
-                      height: controller.googleAdsCTL.myBanner!.size.height
-                          .toDouble(),
-                      child: Center(
-                        child: AdWidget(
-                          ad: controller.googleAdsCTL.myBanner!,
-                        ),
-                      )),
                   verticalSpace(SizeConfig.blockSizeVertical),
                   controller.isBrowsing.value
                       ? Container()
@@ -58,7 +49,7 @@ class HomeView extends GetView<HomeController> {
                               : _appCatalog(),
                         ),
                   verticalSpace(SizeConfig.blockSizeVertical),
-                  controller.isBrowsing.value ? Container() : _nativeAd()
+                  // controller.isBrowsing.value ? Container() : _nativeAd()
                 ],
               )),
         ),
@@ -254,7 +245,6 @@ class HomeView extends GetView<HomeController> {
   Widget _selectApp(String name, String img, int index, int color) {
     return InkWell(
       onTap: () {
-        controller.googleAdsCTL.showInterstitialAd();
         if (index == 0) {
           controller.isBrowsing.value = true;
           controller.searchTextCTL.text = "https://facebook.com/";
@@ -440,7 +430,10 @@ class HomeView extends GetView<HomeController> {
                             title: "Invalid URL",
                             msg: "Please enter a valid URL");
                       } else {
-                        controller.isBrowsing.value = true;
+                        if (link.contains("tiktok")) {
+                          controller.callTiktokApi(link);
+                        }
+                        // controller.isBrowsing.value = true;
                       }
                     },
                     child: Icon(Icons.arrow_forward_ios)),
@@ -463,24 +456,5 @@ class HomeView extends GetView<HomeController> {
     );
     print("thumbnail: $thumb");
     return thumb;
-  }
-
-  Widget _nativeAd() {
-    return Obx(() => controller.googleAdsCTL.isNativeLoaded.value
-        ? Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-                color: Colors.grey,
-                alignment: Alignment.center,
-                width: 320,
-                // height: 120,
-                height: 220,
-                //                 width: 500,
-                // height: 500,
-                // color: Colors.red,
-                margin: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 5),
-                child: controller.googleAdsCTL.nativeAdWidget!),
-          )
-        : Container());
   }
 }

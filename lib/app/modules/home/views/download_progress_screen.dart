@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+
 import 'package:video_downloader/app/modules/home/controllers/download_progress_ctl.dart';
 import 'package:video_downloader/app/utils/colors.dart';
 import 'package:video_downloader/app/utils/images.dart';
@@ -25,14 +25,6 @@ class DownloadProgressScreen extends GetView<HomeController> {
           EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal * 2),
       child: Column(
         children: [
-          Container(
-              width: SizeConfig.screenWidth,
-              height: controller.googleAdsCTL.myBanner!.size.height.toDouble(),
-              child: Center(
-                child: AdWidget(
-                  ad: controller.googleAdsCTL.myBannerDownloadinProgress!,
-                ),
-              )),
           Expanded(
             child: Obx(() => ListView.builder(
                 itemCount: controller.downloadingVideos.length,
@@ -141,14 +133,6 @@ class DownloadProgressScreen extends GetView<HomeController> {
   Widget _noDownloadInProgress() {
     return Column(
       children: [
-        Container(
-            width: SizeConfig.screenWidth,
-            height: controller.googleAdsCTL.myBanner!.size.height.toDouble(),
-            child: Center(
-              child: AdWidget(
-                ad: controller.googleAdsCTL.myBannerNoDownloadinProgress!,
-              ),
-            )),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

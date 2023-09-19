@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:video_downloader/app/modules/home/controllers/splash_ctl.dart';
 import 'package:video_downloader/app/routes/app_pages.dart';
@@ -149,7 +149,7 @@ class SplashScreen extends GetView<SplashController> {
                 ),
               ),
             ),
-            _nativeAd(),
+            // _nativeAd(),
             // Align(
             //     alignment: Alignment.topCenter,
             //     child: Container(
@@ -192,25 +192,5 @@ class SplashScreen extends GetView<SplashController> {
       //       )
       //     : Container()),
     );
-  }
-
-  Widget _nativeAd() {
-    return Obx(() => controller.googleAdsCT.isNativeOnBrowseLoaded.value
-        ? Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-                color: Colors.grey[400],
-                alignment: Alignment.center,
-                width: 320,
-                // height: 120,
-                height: 220,
-                //                 width: 500,
-                // height: 500,
-                // color: Colors.red,
-                margin: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 5),
-                child:
-                    AdWidget(ad: controller.googleAdsCT.myNativeBrowseScreen!)),
-          )
-        : Container());
   }
 }

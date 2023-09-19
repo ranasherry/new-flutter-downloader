@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:video_downloader/app/modules/home/controllers/google_ad_ctl.dart';
 
 import 'package:video_downloader/app/modules/home/controllers/splash_ctl.dart';
 
@@ -11,9 +10,9 @@ class SplashBinding extends Bindings {
     Get.lazyPut<SplashController>(
       () => SplashController(),
     );
-      Get.lazyPut<GoogleAdsCTL>(
-      () => GoogleAdsCTL(),
-    );
-    // Get.put(AppLovin_CTL());
+    //   Get.lazyPut<GoogleAdsCTL>(
+    //   () => GoogleAdsCTL(),
+    // );
+    // // Get.put(AppLovin_CTL());
   }
 }

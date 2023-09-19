@@ -172,7 +172,7 @@ class TabsScreenView extends GetView<TabsController> {
                             onTap: () {
                               controller.tabIndex.value = 3;
                               // controller.appLovin_CTL.showInterAd();
-                              controller.googleAdsCTL.showInterstitialAd();
+                              // controller.googleAdsCTL.showInterstitialAd();
                             },
                             child: FittedBox(
                               child: Column(
@@ -207,7 +207,7 @@ class TabsScreenView extends GetView<TabsController> {
                             onTap: () {
                               controller.tabIndex.value = 5;
                               // controller.appLovin_CTL.showInterAd();
-                              controller.googleAdsCTL.showInterstitialAd();
+                              // controller.googleAdsCTL.showInterstitialAd();
                             },
                             child: FittedBox(
                               child: Column(

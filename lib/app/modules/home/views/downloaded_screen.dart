@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+
 import 'package:path_provider/path_provider.dart';
 import 'package:video_downloader/app/modules/home/controllers/download_progress_ctl.dart';
 import 'package:video_downloader/app/modules/home/controllers/downloaded_controller.dart';
@@ -35,14 +35,6 @@ class DownloadedScreen extends GetView<HomeController> {
           EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal * 2),
       child: Column(
         children: [
-          Container(
-              width: SizeConfig.screenWidth,
-              height: controller.googleAdsCTL.myBanner!.size.height.toDouble(),
-              child: Center(
-                child: AdWidget(
-                  ad: controller.googleAdsCTL.myBannerDownloaded!,
-                ),
-              )),
           Expanded(
             child: Obx(() => ListView.builder(
                 itemCount: controller.downloadedVideos.length,
@@ -212,14 +204,6 @@ class DownloadedScreen extends GetView<HomeController> {
   Widget _noDownloaded() {
     return Column(
       children: [
-        Container(
-            width: SizeConfig.screenWidth,
-            height: controller.googleAdsCTL.myBanner!.size.height.toDouble(),
-            child: Center(
-              child: AdWidget(
-                ad: controller.googleAdsCTL.myBannerNoDownloaded!,
-              ),
-            )),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
