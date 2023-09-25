@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "149377013217",
+    "project_id": "flutter-downloader-32254",
+    "storage_bucket": "flutter-downloader-32254.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:149377013217:android:3026e19bea455cd73e2ea0",
+        "android_client_info": {
+          "package_name": "com.allvideodownloader.vdmate.vmate.vidmake"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWoMTzgM4Iod0WW0-ZpsLKrIPDKGOIFLU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

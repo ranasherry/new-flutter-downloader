@@ -28,6 +28,7 @@ class AdMobAdsProvider {
 
   RewardedAd? _rewardedAd;
   int _numRewardedLoadAttempts = 0;
+  RxBool isAdEnable = false.obs;
 
   String get interstitialAdUnitId => 'your_interstitial_ad_unit_id_here';
   int maxFailedLoadAttempts = 3;
