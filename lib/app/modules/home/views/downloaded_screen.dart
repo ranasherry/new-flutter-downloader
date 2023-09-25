@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:video_downloader/app/modules/home/controllers/download_progress_ctl.dart';
@@ -17,43 +18,94 @@ import 'package:video_downloader/app/utils/images.dart';
 import 'package:video_downloader/app/utils/size_config.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
+import '../../../utils/app_strings.dart';
+
 class DownloadedScreen extends GetView<HomeController> {
+  // // // Banner Ad Implementation start // // //
+
+  late BannerAd myBanner;
+  RxBool isBannerLoaded = false.obs;
+
+  initBanner() {
+    BannerAdListener listener = BannerAdListener(
+      // Called when an ad is successfully received.
+      onAdLoaded: (Ad ad) {
+        print('Ad loaded.');
+        isBannerLoaded.value = true;
+      },
+      // Called when an ad request failed.
+      onAdFailedToLoad: (Ad ad, LoadAdError error) {
+        // Dispose the ad here to free resources.
+        ad.dispose();
+        print('Ad failed to load: $error');
+      },
+      // Called when an ad opens an overlay that covers the screen.
+      onAdOpened: (Ad ad) {
+        print('Ad opened.');
+      },
+      // Called when an ad removes an overlay that covers the screen.
+      onAdClosed: (Ad ad) {
+        print('Ad closed.');
+      },
+      // Called when an impression occurs on the ad.
+      onAdImpression: (Ad ad) {
+        print('Ad impression.');
+      },
+    );
+
+    myBanner = BannerAd(
+      adUnitId: AppStrings.ADMOB_BANNER,
+      size: AdSize.banner,
+      request: AdRequest(),
+      listener: listener,
+    );
+    myBanner.load();
+  }
+
+  /// Banner Ad Implementation End ///
   @override
   Widget build(BuildContext context) {
+    initBanner();
     print("Downloaded Screen");
     controller.getDir();
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        body: controller.downloadedVideos.isEmpty
-            ? _noDownloaded()
-            : _downloadedItems());
+        body: Column(
+          children: [
+            Obx(() => isBannerLoaded.value
+                ? Container(
+                    height: AdSize.banner.height.toDouble(),
+                    child: AdWidget(ad: myBanner))
+                : SizedBox(
+                    height: AdSize.banner.height.toDouble(),
+                  )),
+            controller.downloadedVideos.isEmpty
+                ? _noDownloaded()
+                : _downloadedItems()
+          ],
+        ));
   }
 
   Widget _downloadedItems() {
-    return Container(
-      padding:
-          EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal * 2),
-      child: Column(
-        children: [
-          Expanded(
-            child: Obx(() => ListView.builder(
-                itemCount: controller.downloadedVideos.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return InkWell(
-                      onTap: () {
-                        Get.toNamed(Routes.VideoPlayer, arguments: [
-                          controller.downloadedVideos[index].path
-                        ]);
-                      },
-                      child: _downloadedItem(index));
-                })),
-          ),
-        ],
+    return Expanded(
+      child: Container(
+        padding: EdgeInsets.symmetric(
+            horizontal: SizeConfig.blockSizeHorizontal * 2),
+        child: Obx(() => ListView.builder(
+            itemCount: controller.downloadedVideos.length,
+            itemBuilder: (BuildContext context, int index) {
+              return InkWell(
+                  onTap: () {
+                    Get.toNamed(Routes.VideoPlayer,
+                        arguments: [controller.downloadedVideos[index].path]);
+                  },
+                  child: _downloadedItem(index));
+            })),
       ),
     );
   }
 
-  Container _downloadedItem(int index) {
+  Widget _downloadedItem(int index) {
     return Container(
       padding: EdgeInsets.symmetric(
           horizontal: SizeConfig.blockSizeHorizontal * 2,
@@ -122,7 +174,7 @@ class DownloadedScreen extends GetView<HomeController> {
                         vertical: SizeConfig.blockSizeVertical * 0.25,
                         horizontal: SizeConfig.blockSizeHorizontal),
                     decoration: BoxDecoration(
-                        color: AppColors.black,
+                        color: AppColors.background,
                         borderRadius: BorderRadius.only(
                             bottomRight: Radius.circular(10),
                             topLeft: Radius.circular(10))),
@@ -140,9 +192,15 @@ class DownloadedScreen extends GetView<HomeController> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "${controller.downloadedVideos[index].name}",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              Container(
+                width: SizeConfig.blockSizeHorizontal * 50,
+                child: Text(
+                  "${controller.downloadedVideos[index].name}",
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontSize: SizeConfig.blockSizeHorizontal * 3.5,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
               verticalSpace(SizeConfig.blockSizeVertical * 0.5),
               Text(
@@ -202,35 +260,33 @@ class DownloadedScreen extends GetView<HomeController> {
   }
 
   Widget _noDownloaded() {
-    return Column(
-      children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Image.asset(
-              //   AppImages.downloaded_empty_box,
-              //   width: SizeConfig.blockSizeHorizontal * 50,
-              // ),
-              verticalSpace(SizeConfig.blockSizeVertical * 2),
-              Text(
-                "Nothing Found!",
-                style: TextStyle(
-                    fontSize: SizeConfig.blockSizeHorizontal * 6,
-                    color: Colors.grey.shade300),
-              ),
-              verticalSpace(SizeConfig.blockSizeVertical * 1),
-              Text(
-                "No current downloads in progress",
-                style: TextStyle(
-                    color: Colors.grey.shade300,
-                    fontSize: SizeConfig.blockSizeHorizontal * 4),
-              ),
-            ],
-          ),
+    return Expanded(
+      child: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Image.asset(
+            //   AppImages.downloaded_empty_box,
+            //   width: SizeConfig.blockSizeHorizontal * 50,
+            // ),
+            verticalSpace(SizeConfig.blockSizeVertical * 2),
+            Text(
+              "Nothing Found!",
+              style: TextStyle(
+                  fontSize: SizeConfig.blockSizeHorizontal * 6,
+                  color: Colors.grey),
+            ),
+            verticalSpace(SizeConfig.blockSizeVertical * 1),
+            Text(
+              "No current downloads in progress",
+              style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: SizeConfig.blockSizeHorizontal * 4),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 

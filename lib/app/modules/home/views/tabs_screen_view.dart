@@ -30,12 +30,12 @@ class TabsScreenView extends GetView<TabsController> {
         appBar: AppBar(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           titleTextStyle: TextStyle(
-              color: AppColors.navColors,
+              color: AppColors.black,
               // color: Colors.white,
               fontSize: SizeConfig.blockSizeHorizontal * 6),
           title: Text(
             "All Video Downloader",
-            style: GoogleFonts.pacifico(),
+            // style: GoogleFonts.pacifico(),
           ),
           actions: [
             Padding(
@@ -48,7 +48,7 @@ class TabsScreenView extends GetView<TabsController> {
                   child: Icon(
                     Icons.settings_outlined,
                     size: 26.0,
-                    color: AppColors.navColors,
+                    color: AppColors.black,
                   ),
                 )),
           ],
@@ -58,11 +58,13 @@ class TabsScreenView extends GetView<TabsController> {
               index: controller.tabIndex.value,
               children: [
                 HomeView(),
-                HomeView(),
                 DownloadProgressScreen(),
                 DownloadedScreen(),
-                WhatsappFeaturesView(),
-                BrowseView(),
+                // HomeView(),
+                // DownloadProgressScreen(),
+                // DownloadedScreen(),
+                // WhatsappFeaturesView(),
+                // BrowseView(),
               ],
             )),
         bottomNavigationBar: Column(
@@ -83,11 +85,13 @@ class TabsScreenView extends GetView<TabsController> {
             //         )
             //     : Container()),
             Obx(() => Card(
-                  color: Color(0xFF1E1E1E),
-                  elevation: 1,
+                  color: Colors.white,
+                  shadowColor: Colors.white,
+                  surfaceTintColor: Colors.white,
+                  elevation: 10,
                   margin: EdgeInsets.all(0.0),
                   child: Container(
-                    decoration: BoxDecoration(),
+                    // decoration: BoxDecoration(),
                     padding: EdgeInsets.symmetric(
                         horizontal: SizeConfig.blockSizeHorizontal * 3,
                         vertical: SizeConfig.blockSizeVertical * 1.2),
@@ -113,8 +117,8 @@ class TabsScreenView extends GetView<TabsController> {
                                   Icon(
                                     Icons.home_rounded,
                                     color: controller.tabIndex.value == 0
-                                        ? AppColors.navColors
-                                        : AppColors.white,
+                                        ? AppColors.background
+                                        : AppColors.grey,
                                   ),
                                   verticalSpace(
                                       SizeConfig.blockSizeVertical * 1),
@@ -122,9 +126,42 @@ class TabsScreenView extends GetView<TabsController> {
                                     "Home",
                                     style: TextStyle(
                                         color: controller.tabIndex.value == 0
-                                            ? AppColors.navColors
-                                            : AppColors.white,
+                                            ? AppColors.background
+                                            : AppColors.grey,
                                         fontSize: controller.tabIndex.value == 0
+                                            ? 15
+                                            : 13),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(50),
+                            onTap: () {
+                              controller.tabIndex.value = 1;
+                              // controller.appLovin_CTL.showInterAd();
+                            },
+                            child: FittedBox(
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    Icons.downloading,
+                                    color: controller.tabIndex.value == 1
+                                        ? AppColors.background
+                                        : AppColors.grey,
+                                  ),
+                                  verticalSpace(
+                                      SizeConfig.blockSizeVertical * 1),
+                                  Text(
+                                    "Progress",
+                                    style: TextStyle(
+                                        color: controller.tabIndex.value == 1
+                                            ? AppColors.background
+                                            : AppColors.grey,
+                                        fontSize: controller.tabIndex.value == 1
                                             ? 15
                                             : 13),
                                   )
@@ -139,24 +176,25 @@ class TabsScreenView extends GetView<TabsController> {
                             onTap: () {
                               controller.tabIndex.value = 2;
                               // controller.appLovin_CTL.showInterAd();
+                              // controller.googleAdsCTL.showInterstitialAd();
                             },
                             child: FittedBox(
                               child: Column(
                                 children: [
                                   Icon(
-                                    Icons.downloading,
+                                    Icons.home_repair_service,
                                     color: controller.tabIndex.value == 2
-                                        ? AppColors.navColors
-                                        : AppColors.white,
+                                        ? AppColors.background
+                                        : AppColors.grey,
                                   ),
                                   verticalSpace(
                                       SizeConfig.blockSizeVertical * 1),
                                   Text(
-                                    "Progress",
+                                    "Downloads",
                                     style: TextStyle(
                                         color: controller.tabIndex.value == 2
-                                            ? AppColors.navColors
-                                            : AppColors.white,
+                                            ? AppColors.background
+                                            : AppColors.grey,
                                         fontSize: controller.tabIndex.value == 2
                                             ? 15
                                             : 13),
@@ -166,75 +204,41 @@ class TabsScreenView extends GetView<TabsController> {
                             ),
                           ),
                         ),
-                        Expanded(
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(50),
-                            onTap: () {
-                              controller.tabIndex.value = 3;
-                              // controller.appLovin_CTL.showInterAd();
-                              // controller.googleAdsCTL.showInterstitialAd();
-                            },
-                            child: FittedBox(
-                              child: Column(
-                                children: [
-                                  Icon(
-                                    Icons.home_repair_service,
-                                    color: controller.tabIndex.value == 3
-                                        ? AppColors.navColors
-                                        : AppColors.white,
-                                  ),
-                                  verticalSpace(
-                                      SizeConfig.blockSizeVertical * 1),
-                                  Text(
-                                    "Downloads",
-                                    style: TextStyle(
-                                        color: controller.tabIndex.value == 3
-                                            ? AppColors.navColors
-                                            : AppColors.white,
-                                        fontSize: controller.tabIndex.value == 3
-                                            ? 15
-                                            : 13),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
                         //! Browser
-                        Expanded(
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(50),
-                            onTap: () {
-                              controller.tabIndex.value = 5;
-                              // controller.appLovin_CTL.showInterAd();
-                              // controller.googleAdsCTL.showInterstitialAd();
-                            },
-                            child: FittedBox(
-                              child: Column(
-                                children: [
-                                  Icon(
-                                    Icons.travel_explore,
-                                    color: controller.tabIndex.value == 5
-                                        ? AppColors.navColors
-                                        : AppColors.white,
-                                  ),
-                                  verticalSpace(
-                                      SizeConfig.blockSizeVertical * 1),
-                                  Text(
-                                    "Browse",
-                                    style: TextStyle(
-                                        color: controller.tabIndex.value == 5
-                                            ? AppColors.navColors
-                                            : AppColors.white,
-                                        fontSize: controller.tabIndex.value == 5
-                                            ? 15
-                                            : 13),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Expanded(
+                        //   child: InkWell(
+                        //     borderRadius: BorderRadius.circular(50),
+                        //     onTap: () {
+                        //       controller.tabIndex.value = 5;
+                        //       // controller.appLovin_CTL.showInterAd();
+                        //       // controller.googleAdsCTL.showInterstitialAd();
+                        //     },
+                        //     child: FittedBox(
+                        //       child: Column(
+                        //         children: [
+                        //           Icon(
+                        //             Icons.travel_explore,
+                        //             color: controller.tabIndex.value == 5
+                        //                 ? AppColors.navColors
+                        //                 : AppColors.white,
+                        //           ),
+                        //           verticalSpace(
+                        //               SizeConfig.blockSizeVertical * 1),
+                        //           Text(
+                        //             "Browse",
+                        //             style: TextStyle(
+                        //                 color: controller.tabIndex.value == 5
+                        //                     ? AppColors.navColors
+                        //                     : AppColors.white,
+                        //                 fontSize: controller.tabIndex.value == 5
+                        //                     ? 15
+                        //                     : 13),
+                        //           )
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

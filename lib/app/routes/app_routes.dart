@@ -11,6 +11,7 @@ abstract class Routes {
   static const WHATSAPP_FEATURES = _Paths.WHATSAPP_FEATURES;
   static const HOW_TO_SCREEN = _Paths.HOW_TO_SCREEN;
   static const SplashScreen = _Paths.SplashScreen;
+  static const SocialIconsView = _Paths.SocialIconsView;
 }
 
 abstract class _Paths {
@@ -21,4 +22,5 @@ abstract class _Paths {
   static const WHATSAPP_FEATURES = '/whatsapp-features';
   static const HOW_TO_SCREEN = '/how-to-screen';
   static const SplashScreen = '/SplashScreen';
+  static const SocialIconsView = '/SocialIconsView';
 }

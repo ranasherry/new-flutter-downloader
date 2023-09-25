@@ -18,6 +18,9 @@ class AppImages {
   static const sharechat_ic = "assets/images/sharechat_ic.png";
   static const chingari_ic = "assets/images/chingari_ic.png";
   static const trending_ic = "assets/images/trending_ic.png";
+  static const pinterest = "assets/images/pinterest.png";
+  static const main_icon = "assets/images/main_icon.png";
+  static const splash_icon = "assets/images/splash_icon.png";
 
   static const intro_img1 = "assets/images/intro_img1.webp";
 

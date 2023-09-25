@@ -17,7 +17,11 @@ class AppStrings {
   // static const NATIVE_UNITID = "ca-app-pub-7919904592089531/7534473535";
 
   //! Test Ads
-  static const BANNER_UNITID = "ca-app-pub-3940256099942544/6300978111";
-  static const INTER_UNITID = "ca-app-pub-3940256099942544/1033173712";
-  static const NATIVE_UNITID = "ca-app-pub-3940256099942544/2247696110";
+
+  static const ADMOB_BANNER = "ca-app-pub-3940256099942544/6300978111";
+  static const ADMOB_INTERSTITIAL = "ca-app-pub-3940256099942544/1033173712";
+  static const ADMOB_APP_OPEN = "ca-app-pub-294702707100/177174717132";
+  static const ADMOB_NATIVE = "ca-app-pub-3940256099942544/2247696110";
+  static const ADMOB_REWARDED_Inter = "ca-app-pub-7371304701/7401881241";
+  static const ADMOB_REWARDED = "ca-app-pub-274070340/72747273749271";
 }

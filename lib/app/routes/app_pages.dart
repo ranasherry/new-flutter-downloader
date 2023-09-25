@@ -15,6 +15,9 @@ import 'package:video_downloader/app/modules/how_to_screen/views/how_to_screen_v
 import 'package:video_downloader/app/modules/whatsapp_features/bindings/whatsapp_features_binding.dart';
 import 'package:video_downloader/app/modules/whatsapp_features/views/whatsapp_features_view.dart';
 
+import '../modules/home/bindings/social_icons_view_binding.dart';
+import '../modules/home/views/social_icons_view.dart';
+
 part 'app_routes.dart';
 
 class AppPages {
@@ -57,6 +60,11 @@ class AppPages {
       name: _Paths.SplashScreen,
       page: () => SplashScreen(),
       binding: SplashBinding(),
+    ),
+    GetPage(
+      name: _Paths.SocialIconsView,
+      page: () => SocialIconsView(),
+      binding: SocialIconsViewBinding(),
     ),
   ];
 }

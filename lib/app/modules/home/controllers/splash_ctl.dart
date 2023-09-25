@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:video_downloader/app/provider/admob_ads_provider.dart';
 
 class SplashController extends GetxController {
   //TODO: Implement HomeControlle
@@ -17,7 +18,7 @@ class SplashController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-
+    AdMobAdsProvider.instance.initialize();
     Timer? timer;
     timer = Timer.periodic(Duration(milliseconds: 500), (_) {
       int n = Random().nextInt(10) + 5;

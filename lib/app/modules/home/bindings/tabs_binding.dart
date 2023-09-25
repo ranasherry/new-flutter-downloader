@@ -20,8 +20,8 @@ class TabsBinding extends Bindings {
     Get.lazyPut<DownloadedCTL>(
       () => DownloadedCTL(),
     );
-    Get.lazyPut<WhatsappFeaturesController>(
-      () => WhatsappFeaturesController(),
-    );
+    // Get.lazyPut<WhatsappFeaturesController>(
+    //   () => WhatsappFeaturesController(),
+    // );
   }
 }

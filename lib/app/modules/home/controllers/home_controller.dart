@@ -7,8 +7,10 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:video_downloader/app/data/downloaded_video.dart';
 import 'package:video_downloader/app/data/downloading_video.dart';
 import 'package:video_downloader/app/data/video_data.dart';
@@ -53,6 +55,7 @@ class HomeController extends GetxController {
   Rx<bool> downloadComplete = false.obs;
   Rx<bool> showLoader = false.obs;
   String? taskId = "";
+  Rx<int> selectedIndex = 0.obs;
   // String downloadUrl = "";
 
   // var downloadProgress = 0.obs;
@@ -425,14 +428,31 @@ class HomeController extends GetxController {
   }
 
   Future<void> shareVideo(DownloadedVideo downloadedVideo) async {
-    print("Sharing Video: $downloadedVideo");
+    try {
+      final filePath = downloadedVideo.path;
+      final mimeType =
+          'video/mp4'; // Adjust the MIME type according to your video format
 
-    await FlutterShare.shareFile(
-      title: 'Sharing File',
-      // text: 'Example share text',
-      filePath: downloadedVideo.path,
-    );
+      await Share.shareFiles(
+        [filePath],
+        text: 'Sharing Video',
+        subject: 'Video Subject',
+        mimeTypes: [mimeType],
+      );
+    } catch (e) {
+      print("Error sharing video: $e");
+      // Handle any errors that occur during sharing.
+    }
   }
+  // Future<void> shareVideo(DownloadedVideo downloadedVideo) async {
+  //   print("Sharing Video: $downloadedVideo");
+
+  //   // await FlutterShare.shareFile(
+  //   //   title: 'Sharing File',
+  //   //   // text: 'Example share text',
+  //   //   filePath: downloadedVideo.path,
+  //   // );
+  // }
 
   void CheckSnackVideoURL(String url) async {
     if (url.contains("mp4")) {
@@ -648,10 +668,19 @@ class HomeController extends GetxController {
     print("Video List $videos");
   }
 
+  int getRandomNumber() {
+    final random = Random();
+    return random.nextInt(100) +
+        1; // Generates a random number between 1 and 100
+  }
+
   void callTiktokApi(String link) async {
     print("Called Tiktok Api");
+    EasyLoading.show(status: "Loading...");
+
     final String apiUrl =
-        'https://tiktok-download-without-watermark.p.rapidapi.com/analysis?url=https://vt.tiktok.com/ZSLoD1eS2/&hd=0';
+        'https://tiktok-download-without-watermark.p.rapidapi.com/analysis?url=${Uri.encodeFull(link)}';
+    print("Api Url ${apiUrl}");
 
     final headers = {
       'X-RapidAPI-Key': '657de138e2msha94d49761460a5fp1666e0jsn8a5f3b481e79',
@@ -665,8 +694,9 @@ class HomeController extends GetxController {
         print("Tiktok Api Response 200");
 
         final data = json.decode(response.body);
+        print("Api Response ${data}");
         String playUrl = data['data']['play'];
-        String title = data['data']['title'];
+        String title = data['data']['title'] ?? getRandomNumber().toString();
 
         print(data);
 
@@ -678,17 +708,286 @@ class HomeController extends GetxController {
         );
         videos.addIf(videos.every((element) => element.link != link), newVideo);
         _showDownloadDialogue();
+        EasyLoading.dismiss();
       } else {
         print("Tiktok Api Falied to load Data");
+        EasyLoading.dismiss();
+        EasyLoading.showError("Could not fetch");
 
         throw Exception('Failed to load data');
       }
     } catch (error) {
       print("Tiktok Api Catch $error");
+      EasyLoading.dismiss();
+      EasyLoading.showError("Could not fetch");
 
       print(error);
     }
   }
+
+  void callFacebookApi(String link) async {
+    print("Called Facebook Api");
+    EasyLoading.show(status: "Loading...");
+
+    final String apiUrl =
+        'https://facebook-video-downloader7.p.rapidapi.com/?url=${Uri.encodeFull(link)}';
+    print("Api Url ${apiUrl}");
+
+    final headers = {
+      'X-RapidAPI-Key': 'fbe94f13b8msh9423f9d6f4c6560p13ac20jsn3eab84cf3a84',
+      'X-RapidAPI-Host': 'facebook-video-downloader7.p.rapidapi.com',
+    };
+
+    try {
+      final response = await http.get(Uri.parse(apiUrl), headers: headers);
+
+      if (response.statusCode == 200) {
+        print("Facebook Api Response 200");
+
+        final data = json.decode(response.body);
+        print("Api Response ${data}");
+
+        String playUrl = data['sd'];
+        String title = data['title'] ?? getRandomNumber().toString();
+
+        print(data);
+
+        Video newVideo = Video(
+          name: "VID_" + title,
+          contentType: "",
+          link: playUrl,
+          // size: video_size,
+        );
+        videos.addIf(videos.every((element) => element.link != link), newVideo);
+        _showDownloadDialogue();
+        EasyLoading.dismiss();
+      } else {
+        print("Facbook Api Falied to load Data");
+        EasyLoading.dismiss();
+        EasyLoading.showError("Could not fetch");
+
+        throw Exception('Failed to load data');
+      }
+    } catch (error) {
+      print("Facebook Api Catch $error");
+      EasyLoading.dismiss();
+      EasyLoading.showError("Could not fetch");
+
+      print(error);
+    }
+  }
+
+  void callInstagramApi(String link) async {
+    print("Called Instagram Api");
+    EasyLoading.show(status: "Loading...");
+
+    final String apiUrl =
+        'https://instagram-downloader-download-instagram-videos-stories.p.rapidapi.com/index?url=${Uri.encodeFull(link)}';
+    print("Api Url ${apiUrl}");
+
+    final headers = {
+      'X-RapidAPI-Key': '657de138e2msha94d49761460a5fp1666e0jsn8a5f3b481e79',
+      'X-RapidAPI-Host':
+          'instagram-downloader-download-instagram-videos-stories.p.rapidapi.com',
+    };
+
+    try {
+      final response = await http.get(Uri.parse(apiUrl), headers: headers);
+
+      if (response.statusCode == 200) {
+        print("Instagram Api Response 200");
+
+        final data = json.decode(response.body);
+        print("Api Response ${data}");
+
+        String playUrl = data['media'];
+        String title = data['title'] ?? getRandomNumber().toString();
+
+        print(data);
+
+        Video newVideo = Video(
+          name: "VID_" + title,
+          contentType: "",
+          link: playUrl,
+          // size: video_size,
+        );
+        videos.addIf(videos.every((element) => element.link != link), newVideo);
+        _showDownloadDialogue();
+        EasyLoading.dismiss();
+      } else {
+        print("Instagram Api Falied to load Data");
+        EasyLoading.dismiss();
+        EasyLoading.showError("Could not fetch");
+
+        throw Exception('Failed to load data');
+      }
+    } catch (error) {
+      print("Instagram Api Catch $error");
+      EasyLoading.dismiss();
+      EasyLoading.showError("Could not fetch");
+
+      print(error);
+    }
+  }
+
+  void callPinterestApi(String link) async {
+    print("Called Pinterest Api");
+    EasyLoading.show(status: "Loading...");
+
+    final String apiUrl =
+        'https://pinterest-video-and-image-downloader.p.rapidapi.com/pinterest?url=${Uri.encodeFull(link)}';
+    print("Api Url ${apiUrl}");
+
+    final headers = {
+      'X-RapidAPI-Key': '657de138e2msha94d49761460a5fp1666e0jsn8a5f3b481e79',
+      'X-RapidAPI-Host': 'pinterest-video-and-image-downloader.p.rapidapi.com',
+    };
+
+    try {
+      final response = await http.get(Uri.parse(apiUrl), headers: headers);
+
+      if (response.statusCode == 200) {
+        print("Pinterest Api Response 200");
+
+        final data = json.decode(response.body);
+        print("Api Response ${data}");
+
+        String playUrl = data['data']['url'];
+        String title = data['data']['title'] ?? getRandomNumber().toString();
+
+        print(data);
+
+        Video newVideo = Video(
+          name: "VID_" + title,
+          contentType: "",
+          link: playUrl,
+          // size: video_size,
+        );
+        videos.addIf(videos.every((element) => element.link != link), newVideo);
+        _showDownloadDialogue();
+        EasyLoading.dismiss();
+      } else {
+        print("Pinterest Api Falied to load Data");
+        EasyLoading.dismiss();
+        EasyLoading.showError("Could not fetch");
+
+        throw Exception('Failed to load data');
+      }
+    } catch (error) {
+      print("Pinterest Api Catch $error");
+      EasyLoading.dismiss();
+      EasyLoading.showError("Could not fetch");
+
+      print(error);
+    }
+  }
+
+  void callLikeeApi(String link) async {
+    print("Called Likee Api");
+    EasyLoading.show(status: "Loading...");
+
+    final String apiUrl =
+        'https://likee-downloader-download-likee-videos.p.rapidapi.com/process?url=${Uri.encodeFull(link)}';
+    print("Api Url ${apiUrl}");
+
+    final headers = {
+      'X-RapidAPI-Key': '657de138e2msha94d49761460a5fp1666e0jsn8a5f3b481e79',
+      'X-RapidAPI-Host':
+          'likee-downloader-download-likee-videos.p.rapidapi.com',
+    };
+
+    try {
+      final response = await http.get(Uri.parse(apiUrl), headers: headers);
+
+      if (response.statusCode == 200) {
+        print("Likee Api Response 200");
+
+        final data = json.decode(response.body);
+        print("Api Response ${data}");
+
+        String playUrl = data['withoutWater'];
+        String title = data['nick_name'] ?? getRandomNumber().toString();
+
+        print(data);
+
+        Video newVideo = Video(
+          name: "VID_" + title,
+          contentType: "",
+          link: playUrl,
+          // size: video_size,
+        );
+        videos.addIf(videos.every((element) => element.link != link), newVideo);
+        _showDownloadDialogue();
+        EasyLoading.dismiss();
+      } else {
+        print("Likee Api Falied to load Data");
+        EasyLoading.dismiss();
+        EasyLoading.showError("Could not fetch");
+
+        throw Exception('Failed to load data');
+      }
+    } catch (error) {
+      print("Likee Api Catch $error");
+      EasyLoading.dismiss();
+      EasyLoading.showError("Could not fetch");
+
+      print(error);
+    }
+  }
+
+  // void callTwitterApi(String link) async {
+  //   print("Called Twitter Api");
+  //   EasyLoading.show(status: "Loading...");
+
+  //   final String apiUrl =
+  //       'https://twitter-downloader-download-twitter-videos-gifs-and-images.p.rapidapi.com/status?url=${Uri.encodeFull(link)}';
+  //   print("Api Url ${apiUrl}");
+
+  //   final headers = {
+  //     'X-RapidAPI-Key': '657de138e2msha94d49761460a5fp1666e0jsn8a5f3b481e79',
+  //     'X-RapidAPI-Host':
+  //         'twitter-downloader-download-twitter-videos-gifs-and-images.p.rapidapi.com',
+  //   };
+
+  //   try {
+  //     final response = await http.get(Uri.parse(apiUrl), headers: headers);
+  //     print("status code ${response.statusCode}");
+  //     print("status response body ${response.body}");
+  //     if (response.statusCode == 200) {
+  //       print("Twitter Api Response 200");
+
+  //       final data = json.decode(response.body);
+  //       print("Api Response ${data}");
+
+  //       String playUrl = data['media']['video']['videoVariants'][2]['url'];
+  //       String title = data['description'];
+
+  //       print(data);
+
+  //       Video newVideo = Video(
+  //         name: "VID_" + title,
+  //         contentType: "",
+  //         link: playUrl,
+  //         // size: video_size,
+  //       );
+  //       videos.addIf(videos.every((element) => element.link != link), newVideo);
+  //       _showDownloadDialogue();
+  //       EasyLoading.dismiss();
+  //     } else {
+  //       print("Twitter Api Falied to load Data");
+  //       EasyLoading.dismiss();
+  //       EasyLoading.showError("Could not fetch");
+
+  //       throw Exception('Failed to load data');
+  //     }
+  //   } catch (error) {
+  //     print("Twitter Api Catch $error");
+  //     EasyLoading.dismiss();
+  //     EasyLoading.showError("Could not fetch");
+
+  //     print(error);
+  //   }
+  // }
 
   void _showDownloadDialogue() async {
     // controller.watchUrl.value = "";

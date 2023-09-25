@@ -30,7 +30,9 @@ void main() async {
       builder: EasyLoading.init(),
 
       theme: ThemeData(
-          useMaterial3: true, scaffoldBackgroundColor: Color(0xFF1E1E1E)),
+        useMaterial3: true,
+        scaffoldBackgroundColor: Colors.white,
+      ),
       // theme: Themes.lightTheme,
       // darkTheme: Themes.darkTheme,
       // themeMode: ThemeMode.light,

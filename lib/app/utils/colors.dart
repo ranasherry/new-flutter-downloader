@@ -21,6 +21,9 @@ class AppColors {
   // static const selectedTabColor = Color(0xFFFF0000);
   static const white = Color(0xFFFFFFFF);
   static const black = Color(0xFF000000);
+  static const black1 = Color(0xFF1E1E1E);
+  static const grey = Colors.grey;
   static const inputFieldColor = Color(0xFFF2F2F4);
   static const navColors = Color(0xFFFFD34B);
+  static const background = Color(0xFFFE2C3B);
 }
