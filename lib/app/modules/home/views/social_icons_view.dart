@@ -111,24 +111,25 @@ class SocialIconsView extends GetView<HomeController> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Obx(() => isBannerLoaded.value
+            Obx(() => isBannerLoaded.value &&
+                    AdMobAdsProvider.instance.isAdEnable.value
                 ? Container(
                     height: AdSize.banner.height.toDouble(),
                     child: AdWidget(ad: myBanner))
-                : SizedBox(
-                    height: AdSize.banner.height.toDouble(),
-                  )),
+                : Container()),
             // verticalSpace(SizeConfig.blockSizeVertical),
             verticalSpace(SizeConfig.blockSizeVertical * 5),
             _textInput(controller.searchTextCTL, "Paste your URL here",
                 TextInputType.text, false),
             verticalSpace(SizeConfig.blockSizeVertical * 10),
-            Center(
-              child: Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: SizeConfig.blockSizeHorizontal * 5),
-                  child: NativeAdMethed(nativeAd, nativeAdIsLoaded)),
-            ),
+            AdMobAdsProvider.instance.isAdEnable.value
+                ? Center(
+                    child: Container(
+                        margin: EdgeInsets.symmetric(
+                            horizontal: SizeConfig.blockSizeHorizontal * 5),
+                        child: NativeAdMethed(nativeAd, nativeAdIsLoaded)),
+                  )
+                : Container()
           ],
         ),
       ),
@@ -297,6 +298,33 @@ class SocialIconsView extends GetView<HomeController> {
                                   ComFunction.showInfoDialog(
                                     title: "Invalid URL",
                                     msg: "Please enter Pinterest URL",
+                                  );
+                                }
+                              } else if (controller.selectedIndex.value == 5) {
+                                if (link.contains("twitter")) {
+                                  controller.callTwitterApi(link);
+                                } else {
+                                  ComFunction.showInfoDialog(
+                                    title: "Invalid URL",
+                                    msg: "Please enter Twitter URL",
+                                  );
+                                }
+                              } else if (controller.selectedIndex.value == 6) {
+                                if (link.contains("vimeo.com")) {
+                                  controller.callVimeoApi(link);
+                                } else {
+                                  ComFunction.showInfoDialog(
+                                      title: "Invalid URL",
+                                      msg: "Please Enter Vimeo URL");
+                                }
+                              } else if (controller.selectedIndex.value == 7) {
+                                if (link.contains("facebook") ||
+                                    link.contains("fb")) {
+                                  controller.callFacebookApi(link);
+                                } else {
+                                  ComFunction.showInfoDialog(
+                                    title: "Invalid URL",
+                                    msg: "Please enter FB Watch URL",
                                   );
                                 }
                               }

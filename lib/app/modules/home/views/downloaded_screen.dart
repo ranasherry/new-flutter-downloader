@@ -18,6 +18,7 @@ import 'package:video_downloader/app/utils/images.dart';
 import 'package:video_downloader/app/utils/size_config.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
+import '../../../provider/admob_ads_provider.dart';
 import '../../../utils/app_strings.dart';
 
 class DownloadedScreen extends GetView<HomeController> {
@@ -72,13 +73,12 @@ class DownloadedScreen extends GetView<HomeController> {
         resizeToAvoidBottomInset: false,
         body: Column(
           children: [
-            Obx(() => isBannerLoaded.value
+            Obx(() => isBannerLoaded.value &&
+                    AdMobAdsProvider.instance.isAdEnable.value
                 ? Container(
                     height: AdSize.banner.height.toDouble(),
                     child: AdWidget(ad: myBanner))
-                : SizedBox(
-                    height: AdSize.banner.height.toDouble(),
-                  )),
+                : Container()),
             controller.downloadedVideos.isEmpty
                 ? _noDownloaded()
                 : _downloadedItems()

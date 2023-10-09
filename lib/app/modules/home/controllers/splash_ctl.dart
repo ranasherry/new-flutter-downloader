@@ -18,7 +18,7 @@ class SplashController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    AdMobAdsProvider.instance.initialize();
+    // AdMobAdsProvider.instance.initialize();
     Timer? timer;
     timer = Timer.periodic(Duration(milliseconds: 500), (_) {
       int n = Random().nextInt(10) + 5;

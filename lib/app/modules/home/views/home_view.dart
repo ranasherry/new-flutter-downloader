@@ -112,13 +112,12 @@ class HomeView extends GetView<HomeController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Obx(() => isBannerLoaded.value
+                Obx(() => isBannerLoaded.value &&
+                        AdMobAdsProvider.instance.isAdEnable.value
                     ? Container(
                         height: AdSize.banner.height.toDouble(),
                         child: AdWidget(ad: myBanner))
-                    : SizedBox(
-                        height: AdSize.banner.height.toDouble(),
-                      )),
+                    : Container()),
                 verticalSpace(SizeConfig.blockSizeVertical),
                 controller.isBrowsing.value
                     ? Container()
@@ -136,12 +135,15 @@ class HomeView extends GetView<HomeController> {
                             : _appCatalog(),
                       ),
                 verticalSpace(SizeConfig.blockSizeVertical),
-                Center(
-                  child: Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: SizeConfig.blockSizeHorizontal * 5),
-                      child: NativeAdMethed(nativeAd, nativeAdIsLoaded)),
-                ),
+                AdMobAdsProvider.instance.isAdEnable.value
+                    ? Center(
+                        child: Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: SizeConfig.blockSizeHorizontal * 5),
+                            child: NativeAdMethed(nativeAd, nativeAdIsLoaded)),
+                      )
+                    : Container()
+
                 // controller.isBrowsing.value ? Container() : _nativeAd()
               ],
             )),
@@ -324,7 +326,10 @@ class HomeView extends GetView<HomeController> {
           _selectApp("Instagram", AppImages.instagram_ic, 2, 0xFFE90214),
           // _selectApp("Twitter", AppImages.twitter_ic, 5),
           _selectApp("Tiktok", AppImages.tiktok_ic, 3, 0xFF000000),
-          _selectApp("Pinterest", AppImages.pinterest, 4, 0xFF000000)
+          _selectApp("Pinterest", AppImages.pinterest, 4, 0xFF000000),
+          _selectApp("Twitter", AppImages.twitter_ic, 5, 0xFF000000),
+          _selectApp("Vimeo", AppImages.vimo_ic, 6, 0xFF000000),
+          _selectApp("FB Watch", AppImages.fb_watch, 7, 0xFF000000),
           // _selectApp("Snack Video", AppImages.snack_ic, 8, 0xFF000000),
           // _selectApp("ShareChat", AppImages.sharechat_ic, 9, 0xFF000000),
           // _selectApp("Chingari", AppImages.chingari_ic, 10, 0xFF000000),
@@ -572,6 +577,14 @@ class HomeView extends GetView<HomeController> {
                                       } else {
                                         if (link.contains("l.likee")) {
                                           controller.callLikeeApi(link);
+                                        } else {
+                                          if (link.contains("x.com")) {
+                                            controller.callTwitterApi(link);
+                                          } else {
+                                            if (link.contains("vimeo.com")) {
+                                              controller.callVimeoApi(link);
+                                            }
+                                          }
                                         }
                                       }
                                     }

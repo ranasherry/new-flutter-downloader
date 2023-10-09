@@ -19,6 +19,7 @@ class AppImages {
   static const chingari_ic = "assets/images/chingari_ic.png";
   static const trending_ic = "assets/images/trending_ic.png";
   static const pinterest = "assets/images/pinterest.png";
+  static const fb_watch = "assets/images/fb_watch.png";
   static const main_icon = "assets/images/main_icon.png";
   static const splash_icon = "assets/images/splash_icon.png";
 

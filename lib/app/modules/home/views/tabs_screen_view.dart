@@ -1,22 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:video_downloader/app/modules/home/controllers/home_controller.dart';
 import 'package:video_downloader/app/modules/home/controllers/tabs_controller.dart';
 import 'package:video_downloader/app/modules/home/views/download_progress_screen.dart';
 import 'package:video_downloader/app/modules/home/views/downloaded_screen.dart';
 import 'package:video_downloader/app/modules/home/views/home_view.dart';
-import 'package:video_downloader/app/modules/whatsapp_features/views/whatsapp_features_view.dart';
 import 'package:video_downloader/app/routes/app_pages.dart';
 import 'package:video_downloader/app/utils/CM.dart';
 import 'package:video_downloader/app/utils/colors.dart';
-import 'package:video_downloader/app/utils/images.dart';
 import 'package:video_downloader/app/utils/size_config.dart';
-
-import '../../../utils/app_strings.dart';
-import 'browse_view.dart';
 
 class TabsScreenView extends GetView<TabsController> {
   HomeController homeController = Get.find();

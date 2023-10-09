@@ -21,11 +21,11 @@ class TabsController extends GetxController {
 
     await remoteConfig.setDefaults(const {
       "isAdEnable": false,
-      "native_ad": "",
-      "banner_ad": "",
-      "inter_ad": "",
-      "appopen_ad": "",
-      "app_id": ""
+      "native_ad": "ca-app-pub-3940256099942544/2247696110",
+      "banner_ad": "ca-app-pub-3940256099942544/6300978111",
+      "inter_ad": "ca-app-pub-3940256099942544/1033173712",
+      "appopen_ad": "ca-app-pub-294702707100/177174717132",
+      "app_id": "com.allvideodownloader.vdmate.vmate.vidmake"
     });
 
     remoteConfig.onConfigUpdated.listen((event) async {

@@ -280,7 +280,7 @@ class HomeController extends GetxController {
       //   progress: 0.0.obs,
       //   // downloadedSize: "0.0".obs
       // );
-      downloadingVideos.add(downloadingTask);
+      // downloadingVideos.add(downloadingTask);
       // videos.removeAt(index);
       print("video List: $videos");
     }
@@ -697,6 +697,11 @@ class HomeController extends GetxController {
         print("Api Response ${data}");
         String playUrl = data['data']['play'];
         String title = data['data']['title'] ?? getRandomNumber().toString();
+        if (title.length > 20) {
+          title = title.substring(0, 20);
+        }
+        title = title + "_" + getRandomNumber().toString();
+        print("Title_Tiktok: $title");
 
         print(data);
 
@@ -749,6 +754,11 @@ class HomeController extends GetxController {
 
         String playUrl = data['sd'];
         String title = data['title'] ?? getRandomNumber().toString();
+        if (title.length > 20) {
+          title = title.substring(0, 20);
+        }
+        title = title + "_" + getRandomNumber().toString();
+        print("Title_Facebook: $title");
 
         print(data);
 
@@ -802,6 +812,11 @@ class HomeController extends GetxController {
 
         String playUrl = data['media'];
         String title = data['title'] ?? getRandomNumber().toString();
+        if (title.length > 20) {
+          title = title.substring(0, 20);
+        }
+        title = title + "_" + getRandomNumber().toString();
+        print("Title_Instagram: $title");
 
         print(data);
 
@@ -854,6 +869,11 @@ class HomeController extends GetxController {
 
         String playUrl = data['data']['url'];
         String title = data['data']['title'] ?? getRandomNumber().toString();
+        if (title.length > 20) {
+          title = title.substring(0, 20);
+        }
+        title = title + "_" + getRandomNumber().toString();
+        print("Title_Pinterest: $title");
 
         print(data);
 
@@ -907,6 +927,11 @@ class HomeController extends GetxController {
 
         String playUrl = data['withoutWater'];
         String title = data['nick_name'] ?? getRandomNumber().toString();
+        if (title.length > 20) {
+          title = title.substring(0, 20);
+        }
+        title = title + "_" + getRandomNumber().toString();
+        print("Title_Likee: $title");
 
         print(data);
 
@@ -935,59 +960,121 @@ class HomeController extends GetxController {
     }
   }
 
-  // void callTwitterApi(String link) async {
-  //   print("Called Twitter Api");
-  //   EasyLoading.show(status: "Loading...");
+  void callTwitterApi(String link) async {
+    print("Called Twitter Api");
+    EasyLoading.show(status: "Loading...");
 
-  //   final String apiUrl =
-  //       'https://twitter-downloader-download-twitter-videos-gifs-and-images.p.rapidapi.com/status?url=${Uri.encodeFull(link)}';
-  //   print("Api Url ${apiUrl}");
+    final String apiUrl =
+        'https://twitter-downloader-download-twitter-videos-gifs-and-images.p.rapidapi.com/status?url=${Uri.encodeFull(link)}';
+    print("Api Url ${apiUrl}");
 
-  //   final headers = {
-  //     'X-RapidAPI-Key': '657de138e2msha94d49761460a5fp1666e0jsn8a5f3b481e79',
-  //     'X-RapidAPI-Host':
-  //         'twitter-downloader-download-twitter-videos-gifs-and-images.p.rapidapi.com',
-  //   };
+    final headers = {
+      'X-RapidAPI-Key': '657de138e2msha94d49761460a5fp1666e0jsn8a5f3b481e79',
+      'X-RapidAPI-Host':
+          'twitter-downloader-download-twitter-videos-gifs-and-images.p.rapidapi.com',
+    };
 
-  //   try {
-  //     final response = await http.get(Uri.parse(apiUrl), headers: headers);
-  //     print("status code ${response.statusCode}");
-  //     print("status response body ${response.body}");
-  //     if (response.statusCode == 200) {
-  //       print("Twitter Api Response 200");
+    try {
+      final response = await http.get(Uri.parse(apiUrl), headers: headers);
+      print("status code ${response.statusCode}");
+      print("status response body ${response.body}");
+      if (response.statusCode == 200) {
+        print("Twitter Api Response 200");
 
-  //       final data = json.decode(response.body);
-  //       print("Api Response ${data}");
+        final data = json.decode(response.body);
+        print("Api Response ${data}");
 
-  //       String playUrl = data['media']['video']['videoVariants'][2]['url'];
-  //       String title = data['description'];
+        String playUrl = data['media']['video']['videoVariants'][2]['url'];
+        String title = data['description'] ?? getRandomNumber().toString();
+        if (title.length > 20) {
+          title = title.substring(0, 20);
+        }
+        title = title + "_" + getRandomNumber().toString();
+        print("Title_Twitter: $title");
+        print(data);
+        // title = "twiter";
+        Video newVideo = Video(
+          name: "VID_" + title,
+          contentType: "",
+          link: playUrl,
+          // size: video_size,
+        );
+        videos.addIf(videos.every((element) => element.link != link), newVideo);
+        _showDownloadDialogue();
+        EasyLoading.dismiss();
+      } else {
+        print("Twitter Api Falied to load Data");
+        EasyLoading.dismiss();
+        EasyLoading.showError("Could not fetch");
 
-  //       print(data);
+        throw Exception('Failed to load data');
+      }
+    } catch (error) {
+      print("Twitter Api Catch $error");
+      EasyLoading.dismiss();
+      EasyLoading.showError("Could not fetch");
 
-  //       Video newVideo = Video(
-  //         name: "VID_" + title,
-  //         contentType: "",
-  //         link: playUrl,
-  //         // size: video_size,
-  //       );
-  //       videos.addIf(videos.every((element) => element.link != link), newVideo);
-  //       _showDownloadDialogue();
-  //       EasyLoading.dismiss();
-  //     } else {
-  //       print("Twitter Api Falied to load Data");
-  //       EasyLoading.dismiss();
-  //       EasyLoading.showError("Could not fetch");
+      print(error);
+    }
+  }
 
-  //       throw Exception('Failed to load data');
-  //     }
-  //   } catch (error) {
-  //     print("Twitter Api Catch $error");
-  //     EasyLoading.dismiss();
-  //     EasyLoading.showError("Could not fetch");
+  void callVimeoApi(String link) async {
+    print("Called Vimeo Api");
+    EasyLoading.show(status: "Loading...");
 
-  //     print(error);
-  //   }
-  // }
+    final String apiUrl =
+        'https://vidsnap.p.rapidapi.com/fetch?url=${Uri.encodeFull(link)}';
+    print("Api Url ${apiUrl}");
+
+    final headers = {
+      'X-RapidAPI-Key': '657de138e2msha94d49761460a5fp1666e0jsn8a5f3b481e79',
+      'X-RapidAPI-Host': 'vidsnap.p.rapidapi.com',
+    };
+
+    try {
+      final response = await http.get(Uri.parse(apiUrl), headers: headers);
+      print("status code ${response.statusCode}");
+      print("status response body ${response.body}");
+      if (response.statusCode == 200) {
+        print("Vimeo Api Response 200");
+
+        final data = json.decode(response.body);
+        print("Api Response ${data}");
+
+        String playUrl = data['formats'][0]['videoData'][0]['url'];
+        String title =
+            data['formats'][0]['title'] ?? getRandomNumber().toString();
+        if (title.length > 20) {
+          title = title.substring(0, 20);
+        }
+        title = title + "_" + getRandomNumber().toString();
+        print("Title_Vimeo: $title");
+        print(data);
+        // title = "twiter";
+        Video newVideo = Video(
+          name: "VID_" + title,
+          contentType: "",
+          link: playUrl,
+          // size: video_size,
+        );
+        videos.addIf(videos.every((element) => element.link != link), newVideo);
+        _showDownloadDialogue();
+        EasyLoading.dismiss();
+      } else {
+        print("Vimeo Api Falied to load Data");
+        EasyLoading.dismiss();
+        EasyLoading.showError("Could not fetch");
+
+        throw Exception('Failed to load data');
+      }
+    } catch (error) {
+      print("Vimeo Api Catch $error");
+      EasyLoading.dismiss();
+      EasyLoading.showError("Could not fetch");
+
+      print(error);
+    }
+  }
 
   void _showDownloadDialogue() async {
     // controller.watchUrl.value = "";

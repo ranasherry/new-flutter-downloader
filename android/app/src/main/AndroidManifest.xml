@@ -3,7 +3,7 @@
         <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:label="video_downloader"
+        android:label="Video Downloader"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"
         android:requestLegacyExternalStorage="true"
@@ -45,6 +45,6 @@
  
         <meta-data
         android:name="com.google.android.gms.ads.APPLICATION_ID"
-        android:value="ca-app-pub-3940256099942544~3347511713"/>    
+        android:value="ca-app-pub-7919904592089531~7281093830"/>    
     </application>
 </manifest>

@@ -8,6 +8,7 @@ import 'package:video_downloader/app/utils/colors.dart';
 import 'package:video_downloader/app/utils/images.dart';
 import 'package:video_downloader/app/utils/size_config.dart';
 
+import '../../../provider/admob_ads_provider.dart';
 import '../../../utils/app_strings.dart';
 import '../controllers/home_controller.dart';
 
@@ -61,13 +62,12 @@ class DownloadProgressScreen extends GetView<HomeController> {
         resizeToAvoidBottomInset: false,
         body: Column(
           children: [
-            Obx(() => isBannerLoaded.value
+            Obx(() => isBannerLoaded.value &&
+                    AdMobAdsProvider.instance.isAdEnable.value
                 ? Container(
                     height: AdSize.banner.height.toDouble(),
                     child: AdWidget(ad: myBanner))
-                : SizedBox(
-                    height: AdSize.banner.height.toDouble(),
-                  )),
+                : Container()),
             controller.downloadingVideos.length <= 0
                 ? _noDownloadInProgress()
                 : downloadInProgress()
