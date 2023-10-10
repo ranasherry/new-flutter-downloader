@@ -1,6 +1,9 @@
 import 'dart:io';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -20,6 +23,7 @@ void main() async {
     DeviceOrientation.portraitUp,
     // DeviceOrientation.landscapeRight,
   ]);
+
   WidgetsFlutterBinding.ensureInitialized();
   // FlutterApplovinMax.initSDK();
   // MobileAds.instance.initialize();
@@ -32,21 +36,43 @@ void main() async {
   await FlutterDownloader.initialize(
       debug: true // optional: set false to disable printing logs to console
       );
-  runApp(
-    GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "Application",
-      initialRoute: AppPages.INITIAL,
-      getPages: AppPages.routes,
-      builder: EasyLoading.init(),
+  runApp(const MyApp());
+}
 
-      theme: ThemeData(
-        useMaterial3: true,
-        scaffoldBackgroundColor: Colors.white,
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  static FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    analytics.setAnalyticsCollectionEnabled(kReleaseMode);
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+
+        if (!currentFocus.hasPrimaryFocus &&
+            currentFocus.focusedChild != null) {
+          FocusManager.instance.primaryFocus!.unfocus();
+        }
+      },
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: "Application",
+        initialRoute: AppPages.INITIAL,
+        getPages: AppPages.routes,
+        builder: EasyLoading.init(),
+        theme: ThemeData(
+          useMaterial3: true,
+          scaffoldBackgroundColor: Colors.white,
+        ),
+        // theme: Themes.lightTheme,
+        // darkTheme: Themes.darkTheme,
+        // themeMode: ThemeMode.light,
       ),
-      // theme: Themes.lightTheme,
-      // darkTheme: Themes.darkTheme,
-      // themeMode: ThemeMode.light,
-    ),
-  );
+    );
+  }
 }
