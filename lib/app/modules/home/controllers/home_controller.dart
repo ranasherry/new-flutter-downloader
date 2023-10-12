@@ -154,7 +154,32 @@ class HomeController extends GetxController {
     send!.send([id, status, progress]);
   }
 
+  // void AddGenerwe(InAppWebViewController thisController) async {
+  //   print("Facebook CheckFBUrl");
+  //   // Execute JavaScript to extract the video URL from the HTML content
+  //   var html = await thisController.evaluateJavascript(
+  //     source: """
+  //     var videoElement = document.querySelector('[data-store]');
+  //     var dataStore = videoElement.getAttribute('data-store');
+  //     dataStore;
+  //   """,
+  //   );
+
+  //   if (html != null) {
+  //     Map<String, dynamic> dataStore = json.decode(html);
+
+  //     if (dataStore.containsKey('src')) {
+  //       print("Video URL: ${dataStore['src']}");
+
+  //       // You can add the video URL to your list or perform any other action here.
+  //     } else {
+  //       print("Video URL not found in data-store");
+  //     }
+  //   }
+  // }
+
   void CheckFBURL(InAppWebViewController thisController) async {
+    print("Facebook CheckFBUrl");
     var html = await thisController.evaluateJavascript(
         source:
             "window.document.getElementsByClassName('_53mw')[0].getAttribute('data-store')");
@@ -453,6 +478,72 @@ class HomeController extends GetxController {
   //   //   filePath: downloadedVideo.path,
   //   // );
   // }
+
+  void AllMp4LinkExtractor(String url) async {
+    if (url.contains("mp4")) {
+      //? May be a video link
+      print("AllMp4LinkExtractor URL: $url");
+      String link = url;
+      int min = 100000; //min and max values act as your 6 digit range
+      int max = 999999;
+      var randomizer = new Random();
+      var rNum = min + randomizer.nextInt(max - min);
+
+      String name = rNum.toString();
+      // var video_size = 9.0;
+      // try {
+      //   http.Response r = await http.get(Uri.parse(link));
+      //   final file_size = r.headers["content-length"];
+      //   video_size = double.parse(file_size!) / 1048576;
+      // } catch (e) {
+      //   print("DartIo Exception: $e");
+      // }
+
+      Video newVideo = Video(
+        name: "VID_" + name,
+        contentType: "",
+        link: link,
+        // size: video_size,
+      );
+      videos.addIf(videos.every((element) => element.link != link), newVideo);
+    }
+    // print("File Size: $file_size");
+
+    print("Video List $videos");
+  }
+
+  void AllTSLinkExtractor(String url) async {
+    if (url.contains(".ts")) {
+      //? May be a video link
+      print("AllMp4LinkExtractor URL: $url");
+      String link = url;
+      int min = 100000; //min and max values act as your 6 digit range
+      int max = 999999;
+      var randomizer = new Random();
+      var rNum = min + randomizer.nextInt(max - min);
+
+      String name = rNum.toString();
+      // var video_size = 9.0;
+      // try {
+      //   http.Response r = await http.get(Uri.parse(link));
+      //   final file_size = r.headers["content-length"];
+      //   video_size = double.parse(file_size!) / 1048576;
+      // } catch (e) {
+      //   print("DartIo Exception: $e");
+      // }
+
+      Video newVideo = Video(
+        name: "VID_" + name,
+        contentType: "",
+        link: link,
+        // size: video_size,
+      );
+      videos.addIf(videos.every((element) => element.link != link), newVideo);
+    }
+    // print("File Size: $file_size");
+
+    print("Video List $videos");
+  }
 
   void CheckSnackVideoURL(String url) async {
     if (url.contains("mp4")) {

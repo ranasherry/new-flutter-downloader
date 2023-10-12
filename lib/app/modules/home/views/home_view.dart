@@ -99,8 +99,8 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    initBanner();
-    initNative();
+    // initBanner();
+    // initNative();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       // backgroundColor: Color(0xFF1E1E1E),
@@ -112,37 +112,43 @@ class HomeView extends GetView<HomeController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Obx(() => isBannerLoaded.value &&
-                        AdMobAdsProvider.instance.isAdEnable.value
-                    ? Container(
-                        height: AdSize.banner.height.toDouble(),
-                        child: AdWidget(ad: myBanner))
-                    : Container()),
-                verticalSpace(SizeConfig.blockSizeVertical),
-                controller.isBrowsing.value
+                // Obx(() => isBannerLoaded.value &&
+                //         AdMobAdsProvider.instance.isAdEnable.value
+                //     ? Container(
+                //         height: AdSize.banner.height.toDouble(),
+                //         child: AdWidget(ad: myBanner))
+                //     : Container()),
+                // verticalSpace(SizeConfig.blockSizeVertical),
+
+                Obx(() => controller.isBrowsing.value
                     ? Container()
                     : _textInput(controller.searchTextCTL, "Past your URL here",
-                        TextInputType.text, false),
+                        TextInputType.text, false)),
+
                 verticalSpace(SizeConfig.blockSizeVertical * 2),
-                controller.isBrowsing.value
+                Obx(() => controller.isBrowsing.value
                     ? Expanded(
-                        child: Container(child: MyWebView()),
+                        child: Container(
+                            height: 100,
+                            width: SizeConfig.screenWidth,
+                            color: Colors.red,
+                            child: MyWebView()),
                       )
                     : Container(
                         // color: Colors.red,
                         child: _tabsController.tabIndex.value == 5
                             ? Container()
                             : _appCatalog(),
-                      ),
-                verticalSpace(SizeConfig.blockSizeVertical),
-                AdMobAdsProvider.instance.isAdEnable.value
-                    ? Center(
-                        child: Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: SizeConfig.blockSizeHorizontal * 5),
-                            child: NativeAdMethed(nativeAd, nativeAdIsLoaded)),
-                      )
-                    : Container()
+                      )),
+                // verticalSpace(SizeConfig.blockSizeVertical),
+                // AdMobAdsProvider.instance.isAdEnable.value
+                //     ? Center(
+                //         child: Container(
+                //             margin: EdgeInsets.symmetric(
+                //                 horizontal: SizeConfig.blockSizeHorizontal * 5),
+                //             child: NativeAdMethed(nativeAd, nativeAdIsLoaded)),
+                //       )
+                //     : Container()
 
                 // controller.isBrowsing.value ? Container() : _nativeAd()
               ],
@@ -154,6 +160,7 @@ class HomeView extends GetView<HomeController> {
                   ? Colors.green[400]
                   : Colors.grey,
               onPressed: () {
+                // print("")
                 if (controller.videos.length > 0) {
                   _showDownloadDialogue();
                 }
@@ -344,8 +351,18 @@ class HomeView extends GetView<HomeController> {
     return InkWell(
       onTap: () {
         AdMobAdsProvider.instance.showInterstitialAd();
-        controller.selectedIndex.value = index;
-        Get.toNamed(Routes.SocialIconsView, arguments: index);
+        if (index == 0) {
+          controller.searchTextCTL.text = "www.facebook.com";
+          controller.isBrowsing.value = true;
+          return;
+        } else if (index == 2) {
+          controller.searchTextCTL.text = 'www.instagram.com';
+          controller.isBrowsing.value = true;
+        } else {
+          controller.searchTextCTL.text = "";
+          Get.toNamed(Routes.SocialIconsView, arguments: index);
+          controller.selectedIndex.value = index;
+        }
 
         //  else {
         //   if (index == 0) {
@@ -567,15 +584,23 @@ class HomeView extends GetView<HomeController> {
                                 } else {
                                   if (link.contains("facebook") ||
                                       link.contains("fb")) {
-                                    controller.callFacebookApi(link);
+                                    controller.searchTextCTL.text = link;
+                                    controller.isBrowsing.value = true;
+                                    // controller.callFacebookApi(link);
                                   } else {
                                     if (link.contains("instagram")) {
-                                      controller.callInstagramApi(link);
+                                      controller.searchTextCTL.text = link;
+                                      controller.isBrowsing.value = true;
+                                      // controller.callInstagramApi(link);
                                     } else {
                                       if (link.contains("pin")) {
-                                        controller.callPinterestApi(link);
+                                        // controller.callPinterestApi(link);
+                                        controller.searchTextCTL.text = link;
+                                        controller.isBrowsing.value = true;
                                       } else {
                                         if (link.contains("l.likee")) {
+                                          // controller.searchTextCTL.text = link;
+                                          // controller.isBrowsing.value = true;
                                           controller.callLikeeApi(link);
                                         } else {
                                           if (link.contains("x.com")) {
@@ -591,7 +616,7 @@ class HomeView extends GetView<HomeController> {
                                   }
                                 }
                               }
-                              controller.searchTextCTL.clear();
+                              // controller.searchTextCTL.clear();
                             },
                             child: Container(
                               height: SizeConfig.blockSizeVertical * 5,
