@@ -9,6 +9,7 @@ import 'package:video_downloader/app/routes/app_pages.dart';
 import 'package:video_downloader/app/utils/colors.dart';
 import 'package:video_downloader/app/utils/images.dart';
 import 'package:video_downloader/app/utils/size_config.dart';
+import 'package:video_downloader/app/utils/style.dart';
 
 import '../controllers/how_to_screen_controller.dart';
 
@@ -17,7 +18,8 @@ class HowToScreenView extends GetView<HowToScreenController> {
   Widget build(BuildContext context) {
     return Scaffold(
         // backgroundColor: Colors.grey.shade800,
-        backgroundColor: Color(0xFF1E1E1E),
+        // backgroundColor: Color(0xFF1E1E1E),
+        backgroundColor: AppColors.background_color,
         body: Container(
           margin: EdgeInsets.symmetric(
               horizontal: SizeConfig.blockSizeHorizontal * 5),
@@ -34,10 +36,15 @@ class HowToScreenView extends GetView<HowToScreenController> {
                         Get.offAllNamed(Routes.TabsScreenView);
                         // Get.put(AppLovin_CTL());
                       },
-                      child: Icon(
-                        Icons.skip_next_rounded,
-                        color: Colors.white,
-                        size: SizeConfig.screenHeight * 0.05,
+                      child: Row(
+                        children: [
+                          Text("Skip",style: StyleSheet.home_text,),
+                          Icon(
+                            Icons.navigate_next_rounded,
+                            color: AppColors.Text_color,
+                            size: SizeConfig.screenHeight * 0.05,
+                          ),
+                        ],
                       )
                       // Text(
                       //   "Skip",
@@ -94,8 +101,9 @@ class HowToScreenView extends GetView<HowToScreenController> {
     return Padding(
       padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 2),
       child: CirclePageIndicator(
-        selectedDotColor: Colors.black,
-        dotColor: Colors.white,
+        selectedDotColor: AppColors.Text_color,
+        // selectedDotColor: Colors.black,
+        dotColor: AppColors.Text_color,
         itemCount: 3,
         currentPageNotifier: controller.currentPageNotifier,
       ),
@@ -128,7 +136,7 @@ class HowToScreenView extends GetView<HowToScreenController> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 24,
-                      color: Colors.white,
+                      color: AppColors.Text_color,
                       fontWeight: FontWeight.bold)),
               verticalSpace(SizeConfig.blockSizeVertical * 1),
               Text(description,
@@ -136,7 +144,8 @@ class HowToScreenView extends GetView<HowToScreenController> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 18,
-                      color: Colors.grey.shade200,
+                      // color: Colors.grey.shade200,
+                      color: AppColors.Text_color,
                       fontWeight: FontWeight.bold)),
               verticalSpace(SizeConfig.blockSizeVertical * 1),
               Obx(
@@ -147,7 +156,7 @@ class HowToScreenView extends GetView<HowToScreenController> {
                             text: 'Note: ',
                             style: TextStyle(
                                 fontSize: 18,
-                                color: Colors.black,
+                                color: AppColors.Text_color,
                                 fontWeight: FontWeight.bold),
                             children: <TextSpan>[
                               TextSpan(

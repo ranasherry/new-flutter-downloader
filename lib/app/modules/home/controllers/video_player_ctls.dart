@@ -4,6 +4,7 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:video_downloader/app/utils/colors.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerCTL extends GetxController {
@@ -50,9 +51,11 @@ class VideoPlayerCTL extends GetxController {
               playedColor: Colors.red.shade100,
               handleColor: Colors.red.shade400,
               backgroundColor: Colors.grey,
-              bufferedColor: Colors.black),
+              // bufferedColor: Colors.black),
+              bufferedColor: AppColors.Text_color),
           placeholder: Container(
-            color: Colors.black,
+            // color: Colors.black,
+            color: AppColors.Text_color,
           ),
           // overlay:  Container(
           //   color: Colors.greenAccent,

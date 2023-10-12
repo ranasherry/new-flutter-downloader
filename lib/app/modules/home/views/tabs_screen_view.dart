@@ -24,7 +24,7 @@ class TabsScreenView extends GetView<TabsController> {
         appBar: AppBar(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           titleTextStyle: TextStyle(
-              color: AppColors.black,
+              color: AppColors.Text_color,
               // color: Colors.white,
               fontSize: SizeConfig.blockSizeHorizontal * 6),
           title: Text(
@@ -42,7 +42,7 @@ class TabsScreenView extends GetView<TabsController> {
                   child: Icon(
                     Icons.settings_outlined,
                     size: 26.0,
-                    color: AppColors.black,
+                    color: AppColors.Text_color,
                   ),
                 )),
           ],
@@ -79,9 +79,9 @@ class TabsScreenView extends GetView<TabsController> {
             //         )
             //     : Container()),
             Obx(() => Card(
-                  color: Colors.white,
-                  shadowColor: Colors.white,
-                  surfaceTintColor: Colors.white,
+                  color: AppColors.background_color,
+                  shadowColor: AppColors.background_color,
+                  surfaceTintColor: AppColors.background_color,
                   elevation: 10,
                   margin: EdgeInsets.all(0.0),
                   child: Container(

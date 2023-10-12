@@ -74,7 +74,7 @@ class _MyWebViewState extends State<MyWebView> {
     return Scaffold(
       body: Container(
         width: SizeConfig.screenWidth,
-        height: SizeConfig.screenHeight,
+        height: SizeConfig.screenHeight ,
         color: Colors.red,
         child: InAppWebView(
           key: webViewKey,

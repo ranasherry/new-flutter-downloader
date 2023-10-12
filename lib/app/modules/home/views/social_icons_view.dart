@@ -92,7 +92,7 @@ class SocialIconsView extends GetView<HomeController> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         titleTextStyle: TextStyle(
-            color: AppColors.black,
+            color: AppColors.Text_color,
             // color: Colors.white,
             fontSize: SizeConfig.blockSizeHorizontal * 6),
         title: Text(
@@ -201,10 +201,10 @@ class SocialIconsView extends GetView<HomeController> {
                     controller: ctl,
                     obscureText: isPassword,
                     keyboardType: inputType,
-                    cursorColor: Colors.black,
+                    cursorColor: AppColors.Text_color,
                     textAlign: TextAlign.left,
                     style: TextStyle(
-                      color: Colors.black,
+                      color: AppColors.Text_color,
                       fontSize: SizeConfig.blockSizeHorizontal * 3.5,
                     ),
                     decoration: InputDecoration(
@@ -366,7 +366,7 @@ class SocialIconsView extends GetView<HomeController> {
                               height: SizeConfig.blockSizeVertical * 5,
                               width: SizeConfig.blockSizeHorizontal * 40,
                               decoration: BoxDecoration(
-                                  color: Colors.green,
+                                  color: AppColors.donwload_button_color,
                                   borderRadius: BorderRadius.circular(
                                       SizeConfig.blockSizeHorizontal * 2)),
                               child: Center(

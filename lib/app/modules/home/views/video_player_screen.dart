@@ -23,6 +23,7 @@ class VideoPlayerScreen extends StatelessWidget {
                           .isInitialized
                   ? Chewie(controller: controller.chewieController!)
                   : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                       children: [CircularProgressIndicator()],
                     ),
             ),

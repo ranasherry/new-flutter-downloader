@@ -26,4 +26,9 @@ class AppColors {
   static const inputFieldColor = Color(0xFFF2F2F4);
   static const navColors = Color(0xFFFFD34B);
   static const background = Color(0xFFFE2C3B);
+  static const background_color = Colors.black;
+  static const donwload_button_color = Colors.red;
+
+  // static const Text_color = Colors.black;
+  static const Text_color = Colors.white;
 }

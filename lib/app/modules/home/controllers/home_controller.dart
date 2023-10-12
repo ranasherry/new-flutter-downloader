@@ -21,6 +21,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import 'package:video_downloader/app/utils/appUtils.dart';
 import 'package:video_downloader/app/utils/app_strings.dart';
+import 'package:video_downloader/app/utils/colors.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:flutter_video_info/flutter_video_info.dart';
 import 'package:path/path.dart';
@@ -1185,7 +1186,8 @@ class HomeController extends GetxController {
             // height: SizeConfig.blockSizeVertical * 0.5,
             width: SizeConfig.blockSizeHorizontal * 5,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5), color: Colors.black),
+                // borderRadius: BorderRadius.circular(5), color: Colors.black),
+                borderRadius: BorderRadius.circular(5), color: AppColors.Text_color),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

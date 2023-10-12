@@ -12,6 +12,7 @@ import 'package:video_downloader/app/utils/colors.dart';
 import 'package:video_downloader/app/utils/images.dart';
 import 'package:video_downloader/app/utils/size_config.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:video_downloader/app/utils/style.dart';
 
 import '../../../provider/admob_ads_provider.dart';
 import '../../../utils/app_strings.dart';
@@ -68,7 +69,7 @@ class SettingsScreen extends GetView<SettingsController> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         titleTextStyle: TextStyle(
-            color: AppColors.black,
+            color: AppColors.Text_color,
             fontSize: SizeConfig.blockSizeHorizontal * 6),
         title: Text(
           "Settings",
@@ -80,7 +81,8 @@ class SettingsScreen extends GetView<SettingsController> {
           },
           child: Icon(
             Icons.arrow_back_ios,
-            color: AppColors.black,
+            // color: AppColors.black,
+            color: AppColors.Text_color,
           ),
         ),
         elevation: 0.0,
@@ -100,7 +102,7 @@ class SettingsScreen extends GetView<SettingsController> {
                         child: AdWidget(ad: myBanner))
                     : Container()),
                 CircleAvatar(
-                  backgroundColor: Colors.white,
+                  // backgroundColor: Colors.white,
                   radius: 50,
                   child: CircleAvatar(
                     radius: 50,
@@ -119,6 +121,7 @@ class SettingsScreen extends GetView<SettingsController> {
               ),
               title: Text(
                 "How to Download",
+                style: StyleSheet.Setting_Sub_heading,
                 // style: GoogleFonts.pacifico(color: AppColors.black1)
               ),
               trailing: Icon(
@@ -139,6 +142,7 @@ class SettingsScreen extends GetView<SettingsController> {
               ),
               title: Text(
                 "Storage Location",
+                style: StyleSheet.Setting_Sub_heading,
                 // style: GoogleFonts.pacifico(color: AppColors.black1)
               ),
               subtitle: Padding(
@@ -185,6 +189,7 @@ class SettingsScreen extends GetView<SettingsController> {
               ),
               title: Text(
                 "Rate us",
+                style: StyleSheet.Setting_Sub_heading,
                 // style: GoogleFonts.pacifico(color: AppColors.black1)
               ),
               onTap: () {
@@ -198,6 +203,7 @@ class SettingsScreen extends GetView<SettingsController> {
               leading: Icon(Icons.share_outlined, color: AppColors.background),
               title: Text(
                 "Share",
+                style: StyleSheet.Setting_Sub_heading,
                 // style: GoogleFonts.pacifico(color: AppColors.black1)
               ),
               onTap: () {
@@ -211,6 +217,7 @@ class SettingsScreen extends GetView<SettingsController> {
                   Icon(Icons.exit_to_app_rounded, color: AppColors.background),
               title: Text(
                 "Exit",
+                style: StyleSheet.Setting_Sub_heading,
                 // style: GoogleFonts.pacifico(color: AppColors.black1)
               ),
               onTap: () {
@@ -227,7 +234,7 @@ class SettingsScreen extends GetView<SettingsController> {
     return Text(
       heading,
       //  style: GoogleFonts.pacifico(color: AppColors.black1)
-
+      style: StyleSheet.Setting_text,
       // TextStyle(
       //     color: AppColors.black, fontSize: 18, fontWeight: FontWeight.bold, ),
     );

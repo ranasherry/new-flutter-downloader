@@ -13,6 +13,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 import 'package:get/get.dart';
 import 'package:video_downloader/app/data/themes.dart';
+import 'package:video_downloader/app/utils/colors.dart';
 
 import 'app/routes/app_pages.dart';
 import 'firebase_options.dart';
@@ -67,7 +68,9 @@ class MyApp extends StatelessWidget {
         builder: EasyLoading.init(),
         theme: ThemeData(
           useMaterial3: true,
-          scaffoldBackgroundColor: Colors.white,
+          scaffoldBackgroundColor: AppColors.background_color,
+          // scaffoldBackgroundColor: Colors.white,
+          // scaffoldBackgroundColor: Themes.lightTheme.scaffoldBackgroundColor,
         ),
         // theme: Themes.lightTheme,
         // darkTheme: Themes.darkTheme,

@@ -32,7 +32,7 @@ class WhatsappFeaturesView extends GetView<WhatsappFeaturesController> {
                 controller: controller.tabController,
                 indicatorColor: Colors.blue,
                 labelColor: Colors.blue,
-                unselectedLabelColor: Colors.black,
+                unselectedLabelColor: AppColors.Text_color,
                 labelPadding: EdgeInsets.zero,
                 tabs: [
                   Tab(
@@ -146,7 +146,7 @@ class WhatsappFeaturesView extends GetView<WhatsappFeaturesController> {
                         vertical: SizeConfig.blockSizeVertical * 0.25,
                         horizontal: SizeConfig.blockSizeHorizontal),
                     decoration: BoxDecoration(
-                        color: AppColors.black,
+                        color: AppColors.Text_color,
                         borderRadius: BorderRadius.only(
                             bottomRight: Radius.circular(10),
                             topLeft: Radius.circular(10))),
@@ -339,7 +339,7 @@ class WhatsappFeaturesView extends GetView<WhatsappFeaturesController> {
           verticalSpace(SizeConfig.blockSizeVertical * 1),
           Text(
             "No Images to Show",
-            style: TextStyle(color: Colors.black54, fontSize: 16),
+            style: TextStyle(color: AppColors.Text_color, fontSize: 16),
           ),
         ],
       ),
@@ -364,7 +364,7 @@ class WhatsappFeaturesView extends GetView<WhatsappFeaturesController> {
           verticalSpace(SizeConfig.blockSizeVertical * 1),
           Text(
             "No Videos to Show",
-            style: TextStyle(color: Colors.black54, fontSize: 16),
+            style: TextStyle(color: AppColors.Text_color, fontSize: 16),
           ),
         ],
       ),

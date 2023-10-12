@@ -23,7 +23,8 @@ class SplashScreen extends GetView<SplashController> {
         child: Container(
           width: SizeConfig.screenWidth,
           height: SizeConfig.screenHeight,
-          color: Colors.white,
+          // color: Colors.white,
+          color: AppColors.background_color,
           child: Stack(
             children: [
               Padding(
@@ -57,14 +58,14 @@ class SplashScreen extends GetView<SplashController> {
                           top: SizeConfig.blockSizeVertical * 15),
                       child: Text("All Video Downloader",
                           style: TextStyle(
-                              color: Colors.black,
+                              color: AppColors.Text_color,
                               fontSize: SizeConfig.blockSizeHorizontal * 6,
                               fontWeight: FontWeight.bold)),
                     ),
                     verticalSpace(SizeConfig.blockSizeVertical * 1),
                     Text("Download all videos in one click",
                         style: TextStyle(
-                            color: Colors.black,
+                            color: AppColors.Text_color,
                             fontSize: SizeConfig.blockSizeHorizontal * 3,
                             fontWeight: FontWeight.bold)),
                   ],
@@ -98,18 +99,18 @@ class SplashScreen extends GetView<SplashController> {
                                   ]),
                                   borderRadius: BorderRadius.circular(
                                       SizeConfig.blockSizeHorizontal * 3),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey
-                                          .withOpacity(0.5), // Shadow color
-                                      spreadRadius:
-                                          1, // How far the shadow spreads
-                                      blurRadius:
-                                          2, // The blur radius for the shadow
-                                      offset: Offset(
-                                          0, 3), // Offset of the shadow (x, y)
-                                    ),
-                                  ],
+                                  // boxShadow: [
+                                  //   BoxShadow(
+                                  //     color: Colors.grey
+                                  //         .withOpacity(0.5), // Shadow color
+                                  //     spreadRadius:
+                                  //         1, // How far the shadow spreads
+                                  //     blurRadius:
+                                  //         2, // The blur radius for the shadow
+                                  //     offset: Offset(
+                                  //         0, 3), // Offset of the shadow (x, y)
+                                  //   ),
+                                  // ],
                                 ),
                                 child: Center(
                                   child: Text(

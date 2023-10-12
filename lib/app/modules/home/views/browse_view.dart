@@ -23,7 +23,7 @@ class BrowseView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF1E1E1E),
+      backgroundColor: AppColors.background_color,
       body: Obx(() => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -48,7 +48,7 @@ class BrowseView extends GetView<HomeController> {
       floatingActionButton: Obx(() => controller.isBrowsing.value
           ? FloatingActionButton(
               backgroundColor: controller.videos.length > 0
-                  ? Colors.green[400]
+                  ? AppColors.donwload_button_color[400]
                   : Colors.grey,
               onPressed: () {
                 if (controller.videos.length > 0) {
@@ -73,7 +73,7 @@ class BrowseView extends GetView<HomeController> {
           vertical: SizeConfig.blockSizeVertical * 2),
       // height: SizeConfig.blockSizeVertical * 25,
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.background_color,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10), topRight: Radius.circular(10))),
       child: Column(
@@ -82,7 +82,8 @@ class BrowseView extends GetView<HomeController> {
             // height: SizeConfig.blockSizeVertical * 0.5,
             width: SizeConfig.blockSizeHorizontal * 5,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5), color: Colors.black),
+                // borderRadius: BorderRadius.circular(5), color: Colors.black),
+                borderRadius: BorderRadius.circular(5), color: AppColors.background_color),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -335,10 +336,10 @@ class BrowseView extends GetView<HomeController> {
                 controller: ctl,
                 obscureText: isPassword,
                 keyboardType: inputType,
-                cursorColor: Colors.black,
+                cursorColor: AppColors.Text_color,
                 textAlign: TextAlign.left,
                 style: TextStyle(
-                    color: Colors.black,
+                    color: AppColors.Text_color,
                     fontSize: SizeConfig.blockSizeHorizontal * 4),
                 decoration: InputDecoration(
                   border: InputBorder.none,

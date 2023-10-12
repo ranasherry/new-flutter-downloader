@@ -16,6 +16,7 @@ import 'package:video_downloader/app/utils/CM.dart';
 import 'package:video_downloader/app/utils/colors.dart';
 import 'package:video_downloader/app/utils/images.dart';
 import 'package:video_downloader/app/utils/size_config.dart';
+import 'package:video_downloader/app/utils/style.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 import '../../../provider/admob_ads_provider.dart';
@@ -104,60 +105,65 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       // backgroundColor: Color(0xFF1E1E1E),
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        // physics: NeverScrollableScrollPhysics(),
-        child: Container(
-            height: SizeConfig.screenHeight,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Obx(() => isBannerLoaded.value &&
-                //         AdMobAdsProvider.instance.isAdEnable.value
-                //     ? Container(
-                //         height: AdSize.banner.height.toDouble(),
-                //         child: AdWidget(ad: myBanner))
-                //     : Container()),
-                // verticalSpace(SizeConfig.blockSizeVertical),
+      backgroundColor: AppColors.background_color,
+      body: Container(
+          height: SizeConfig.screenHeight,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Obx(() => isBannerLoaded.value &&
+              //         AdMobAdsProvider.instance.isAdEnable.value
+              //     ? Container(
+              //         height: AdSize.banner.height.toDouble(),
+              //         child: AdWidget(ad: myBanner))
+              //     : Container()),
+              // verticalSpace(SizeConfig.blockSizeVertical),
 
+                verticalSpace(SizeConfig.blockSizeVertical * 3),
                 Obx(() => controller.isBrowsing.value
-                    ? Container()
-                    : _textInput(controller.searchTextCTL, "Past your URL here",
-                        TextInputType.text, false)),
+                  ? Container()
+                  : _textInput(controller.searchTextCTL, "Past your URL here",
+                      TextInputType.text, false)),
+              
 
-                verticalSpace(SizeConfig.blockSizeVertical * 2),
-                Obx(() => controller.isBrowsing.value
-                    ? Expanded(
-                        child: Container(
-                            height: 100,
-                            width: SizeConfig.screenWidth,
-                            color: Colors.red,
-                            child: MyWebView()),
-                      )
-                    : Container(
-                        // color: Colors.red,
-                        child: _tabsController.tabIndex.value == 5
-                            ? Container()
-                            : _appCatalog(),
-                      )),
-                // verticalSpace(SizeConfig.blockSizeVertical),
-                // AdMobAdsProvider.instance.isAdEnable.value
-                //     ? Center(
-                //         child: Container(
-                //             margin: EdgeInsets.symmetric(
-                //                 horizontal: SizeConfig.blockSizeHorizontal * 5),
-                //             child: NativeAdMethed(nativeAd, nativeAdIsLoaded)),
-                //       )
-                //     : Container()
+              verticalSpace(SizeConfig.blockSizeVertical * 3),
+              Obx(() => controller.isBrowsing.value
+                  ? Expanded(
+                      child: Container(
+                          height: 100,
+                          width: SizeConfig.screenWidth,
+                          color: Colors.red,
+                          child: MyWebView()),
+                    )
+                  : Container(
+                      // color: Colors.red,
+                      child: _tabsController.tabIndex.value == 5
+                          ? Container()
+                          : _appCatalog(),
+                    )),
 
-                // controller.isBrowsing.value ? Container() : _nativeAd()
-              ],
-            )),
-      ),
+                  // verticalSpace(SizeConfig.screenHeight * 0.4),
+                  //   Obx(() => controller.isBrowsing.value
+                  // ? Container()
+                  // : _textInput(controller.searchTextCTL, "Past your URL here",
+                  //     TextInputType.text, false)),
+              // verticalSpace(SizeConfig.blockSizeVertical),
+              // AdMobAdsProvider.instance.isAdEnable.value
+              //     ? Center(
+              //         child: Container(
+              //             margin: EdgeInsets.symmetric(
+              //                 horizontal: SizeConfig.blockSizeHorizontal * 5),
+              //             child: NativeAdMethed(nativeAd, nativeAdIsLoaded)),
+              //       )
+              //     : Container()
+
+              // controller.isBrowsing.value ? Container() : _nativeAd()
+            ],
+          )),
       floatingActionButton: Obx(() => controller.isBrowsing.value
           ? FloatingActionButton(
               backgroundColor: controller.videos.length > 0
-                  ? Colors.green[400]
+                  ? AppColors.donwload_button_color[400]
                   : Colors.grey,
               onPressed: () {
                 // print("")
@@ -183,7 +189,7 @@ class HomeView extends GetView<HomeController> {
           vertical: SizeConfig.blockSizeVertical * 2),
       // height: SizeConfig.blockSizeVertical * 25,
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.background_color,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10), topRight: Radius.circular(10))),
       child: Column(
@@ -192,14 +198,16 @@ class HomeView extends GetView<HomeController> {
             // height: SizeConfig.blockSizeVertical * 0.5,
             width: SizeConfig.blockSizeHorizontal * 5,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5), color: Colors.black),
+                // borderRadius: BorderRadius.circular(5), color: Colors.black),
+                borderRadius: BorderRadius.circular(5), color: AppColors.Text_color),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 "Download Options",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: StyleSheet.Setting_Sub_heading,
+                // style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               InkWell(
                   onTap: () {
@@ -229,6 +237,7 @@ class HomeView extends GetView<HomeController> {
           vertical: SizeConfig.blockSizeVertical * 1.5),
       margin: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical),
       decoration: BoxDecoration(
+        // color: AppColors.Text_color,
           borderRadius: BorderRadius.all(Radius.circular(5)),
           border: Border.all()),
       child: Row(
@@ -276,23 +285,24 @@ class HomeView extends GetView<HomeController> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(controller.videos[index].name),
+              Text(controller.videos[index].name,style: StyleSheet.Setting_Sub_heading,),
               FutureBuilder(
                   future: controller.getSize(controller.videos[index].link),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       if (snapshot.hasData) {
-                        return Text("${snapshot.data.toString()} MB");
+                        return Text("${snapshot.data.toString()} MB",
+                        style: StyleSheet.Setting_Sub_heading,);
 
                         // Image.file(
                         //   File(snapshot.data.toString()),
                         //   fit: BoxFit.cover,
                         // );
                       } else {
-                        return Text("Calculating Size...");
+                        return Text("Calculating Size...",style: StyleSheet.Setting_Sub_heading,);
                       }
                     } else {
-                      return Text("Calculating Size...");
+                      return Text("Calculating Size...",style: StyleSheet.Setting_Sub_heading,);
                     }
                   }),
 
@@ -308,7 +318,7 @@ class HomeView extends GetView<HomeController> {
                 Get.back();
                 // controller.appLovin_CTL.showInterAd();
               },
-              child: Icon(Icons.download)),
+              child: Icon(Icons.download,color: AppColors.Text_color,)),
         ],
       ),
     );
@@ -352,7 +362,7 @@ class HomeView extends GetView<HomeController> {
       onTap: () {
         AdMobAdsProvider.instance.showInterstitialAd();
         if (index == 0) {
-          controller.searchTextCTL.text = "www.facebook.com";
+          controller.searchTextCTL.text = "www.facebook.com/watch";
           controller.isBrowsing.value = true;
           return;
         } else if (index == 2) {
@@ -446,6 +456,7 @@ class HomeView extends GetView<HomeController> {
               "$name",
               style: TextStyle(
                 fontSize: SizeConfig.blockSizeHorizontal * 3,
+                color: AppColors.Text_color
               ),
             ),
           ),
@@ -474,6 +485,7 @@ class HomeView extends GetView<HomeController> {
         width: SizeConfig.blockSizeHorizontal * 90,
         decoration: BoxDecoration(
           color: Colors.grey.shade200,
+          // color: AppColors.background_color,
           borderRadius:
               BorderRadius.circular(SizeConfig.blockSizeHorizontal * 2),
           boxShadow: [
@@ -519,10 +531,10 @@ class HomeView extends GetView<HomeController> {
                     controller: ctl,
                     obscureText: isPassword,
                     keyboardType: inputType,
-                    cursorColor: Colors.black,
+                    cursorColor: AppColors.background_color,
                     textAlign: TextAlign.left,
                     style: TextStyle(
-                      color: Colors.black,
+                      color: AppColors.background_color,
                       fontSize: SizeConfig.blockSizeHorizontal * 3.5,
                     ),
                     decoration: InputDecoration(
@@ -622,7 +634,7 @@ class HomeView extends GetView<HomeController> {
                               height: SizeConfig.blockSizeVertical * 5,
                               width: SizeConfig.blockSizeHorizontal * 40,
                               decoration: BoxDecoration(
-                                  color: Colors.green,
+                                  color: AppColors.donwload_button_color,
                                   borderRadius: BorderRadius.circular(
                                       SizeConfig.blockSizeHorizontal * 2)),
                               child: Center(
