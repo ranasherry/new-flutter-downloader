@@ -105,7 +105,7 @@ class SocialIconsView extends GetView<HomeController> {
               controller.searchTextCTL.clear();
               Get.back();
             },
-            child: Icon(Icons.arrow_back_ios)),
+            child: Icon(Icons.arrow_back_ios,color: AppColors.Text_color,)),
         elevation: 0.0,
       ),
       body: SingleChildScrollView(

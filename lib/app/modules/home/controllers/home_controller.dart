@@ -1313,11 +1313,16 @@ class HomeController extends GetxController {
     await Future.delayed(Duration(milliseconds: 500));
     String? thumb = await VideoThumbnail.thumbnailFile(
       video: videoPathUrl,
+      // quality: ,
       thumbnailPath: (await getTemporaryDirectory()).path,
 
       imageFormat: ImageFormat.JPEG,
-      maxHeight:
-          64, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+      maxWidth: 512,
+      maxHeight: 512,
+      // imageFormat: ImageFormat.PNG,
+      // maxHeight:
+      //     64, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+      // quality: 75,
       quality: 75,
     );
     print("thumbnail: $thumb");

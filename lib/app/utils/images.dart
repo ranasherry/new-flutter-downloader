@@ -24,6 +24,7 @@ class AppImages {
   static const splash_icon = "assets/images/splash_icon.png";
 
   static const intro_img1 = "assets/images/intro_img1.webp";
+  static const empty_folder = "assets/images/empty-folder.png";
 
   // static const one = "assets/images/1.webp";
   // static const two = "assets/images/2.webp";

@@ -119,7 +119,7 @@ class HomeView extends GetView<HomeController> {
               //     : Container()),
               // verticalSpace(SizeConfig.blockSizeVertical),
 
-                verticalSpace(SizeConfig.blockSizeVertical * 3),
+                // verticalSpace(SizeConfig.blockSizeVertical * 3),
                 Obx(() => controller.isBrowsing.value
                   ? Container()
                   : _textInput(controller.searchTextCTL, "Past your URL here",
@@ -205,7 +205,7 @@ class HomeView extends GetView<HomeController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Download Options",
+                "Download Optionss",
                 style: StyleSheet.Setting_Sub_heading,
                 // style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
@@ -239,7 +239,10 @@ class HomeView extends GetView<HomeController> {
       decoration: BoxDecoration(
         // color: AppColors.Text_color,
           borderRadius: BorderRadius.all(Radius.circular(5)),
-          border: Border.all()),
+          
+          border: Border.all(
+            // color: AppColors.Text_color
+          )),
       child: Row(
         children: [
           // Container(
@@ -249,6 +252,7 @@ class HomeView extends GetView<HomeController> {
           // ),
           horizontalSpace(SizeConfig.blockSizeHorizontal * 2),
           Container(
+            // color: AppColors.Text_color,
             width: SizeConfig.blockSizeHorizontal * 15,
             height: SizeConfig.blockSizeVertical * 5,
             child: ClipRRect(
@@ -285,24 +289,28 @@ class HomeView extends GetView<HomeController> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(controller.videos[index].name,style: StyleSheet.Setting_Sub_heading,),
+              Text(controller.videos[index].name,),
+              // Text(controller.videos[index].name,style: StyleSheet.Setting_Sub_heading,),
               FutureBuilder(
                   future: controller.getSize(controller.videos[index].link),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       if (snapshot.hasData) {
                         return Text("${snapshot.data.toString()} MB",
-                        style: StyleSheet.Setting_Sub_heading,);
+                        );
+                        // style: StyleSheet.Setting_Sub_heading,);
 
                         // Image.file(
                         //   File(snapshot.data.toString()),
                         //   fit: BoxFit.cover,
                         // );
                       } else {
-                        return Text("Calculating Size...",style: StyleSheet.Setting_Sub_heading,);
+                        // return Text("Calculating Size...",style: StyleSheet.Setting_Sub_heading,);
+                        return Text("Calculating Size...");
                       }
                     } else {
-                      return Text("Calculating Size...",style: StyleSheet.Setting_Sub_heading,);
+                      // return Text("Calculating Size...",style: StyleSheet.Setting_Sub_heading,);
+                      return Text("Calculating Size...");
                     }
                   }),
 
@@ -318,7 +326,8 @@ class HomeView extends GetView<HomeController> {
                 Get.back();
                 // controller.appLovin_CTL.showInterAd();
               },
-              child: Icon(Icons.download,color: AppColors.Text_color,)),
+              // child: Icon(Icons.download,color: AppColors.Text_color,)),
+              child: Icon(Icons.download,color: AppColors.donwload_button_color,)),
         ],
       ),
     );
@@ -328,31 +337,67 @@ class HomeView extends GetView<HomeController> {
     return Padding(
       padding:
           EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal * 5),
-      child: GridView(
-        shrinkWrap: true,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4,
-            crossAxisSpacing: SizeConfig.blockSizeHorizontal * 3,
-            mainAxisSpacing: SizeConfig.blockSizeVertical * 1,
-            childAspectRatio: 2 / 2),
+      child: Column(
         children: [
-          _selectApp("Facebook", AppImages.fb_ic, 0, 0xFF3b5998),
-          // _selectApp("Vimeo", AppImages.vimo_ic, 1, 0xFF19B1E3),
-          // _selectApp("DailyMotion", AppImages.dailymotion_ic, 2, 0xFF000000),
-          _selectApp("Likee", AppImages.likee_ic, 1, 0xFF000000),
-          _selectApp("Instagram", AppImages.instagram_ic, 2, 0xFFE90214),
-          // _selectApp("Twitter", AppImages.twitter_ic, 5),
-          _selectApp("Tiktok", AppImages.tiktok_ic, 3, 0xFF000000),
-          _selectApp("Pinterest", AppImages.pinterest, 4, 0xFF000000),
-          _selectApp("Twitter", AppImages.twitter_ic, 5, 0xFF000000),
-          _selectApp("Vimeo", AppImages.vimo_ic, 6, 0xFF000000),
-          _selectApp("FB Watch", AppImages.fb_watch, 7, 0xFF000000),
-          // _selectApp("Snack Video", AppImages.snack_ic, 8, 0xFF000000),
-          // _selectApp("ShareChat", AppImages.sharechat_ic, 9, 0xFF000000),
-          // _selectApp("Chingari", AppImages.chingari_ic, 10, 0xFF000000),
+          GridView(
+            shrinkWrap: true,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+                crossAxisSpacing: SizeConfig.blockSizeHorizontal * 3,
+                mainAxisSpacing: SizeConfig.blockSizeVertical * 1,
+                childAspectRatio: 2 / 2),
+            children: [
+              _selectApp("Facebook", AppImages.fb_ic, 0, 0xFF3b5998),
+              // _selectApp("Vimeo", AppImages.vimo_ic, 1, 0xFF19B1E3),
+              // _selectApp("DailyMotion", AppImages.dailymotion_ic, 2, 0xFF000000),
+              _selectApp("Likee", AppImages.likee_ic, 1, 0xFF000000),
+              _selectApp("Instagram", AppImages.instagram_ic, 2, 0xFFE90214),
+              // _selectApp("Twitter", AppImages.twitter_ic, 5),
+              _selectApp("Tiktok", AppImages.tiktok_ic, 3, 0xFF000000),
+              _selectApp("Pinterest", AppImages.pinterest, 4, 0xFF000000),
+              _selectApp("Twitter", AppImages.twitter_ic, 5, 0xFF000000),
+              _selectApp("Vimeo", AppImages.vimo_ic, 6, 0xFF000000),
+              _selectApp("FB Watch", AppImages.fb_watch, 7, 0xFF000000),
+              // _selectApp("Snack Video", AppImages.snack_ic, 8, 0xFF000000),
+              // _selectApp("ShareChat", AppImages.sharechat_ic, 9, 0xFF000000),
+              // _selectApp("Chingari", AppImages.chingari_ic, 10, 0xFF000000),
 
-          // _selectApp("WhatsApp", AppImages.whatsapp_ic, 7, 0xFF1BBE42),
+              // _selectApp("WhatsApp", AppImages.whatsapp_ic, 7, 0xFF1BBE42),
+            ],
+          ),
+          How_to_download_Buttom()
         ],
+      ),
+    );
+  }
+
+  Widget How_to_download_Buttom(){
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GestureDetector(
+        onTap: (){
+          Get.toNamed(Routes.HOW_TO_SCREEN);
+        },
+        child: Container(
+                                    height: SizeConfig.blockSizeVertical * 5,
+                                    width: SizeConfig.blockSizeHorizontal * 90,
+                                    decoration: BoxDecoration(
+                                        color: AppColors.donwload_button_color,
+                                        borderRadius: BorderRadius.circular(
+                                            SizeConfig.blockSizeHorizontal * 2)),
+                                    child: Center(
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Icon(Icons.help,color: AppColors.white,),
+                                            SizedBox(width: SizeConfig.screenWidth *0.01,),
+                                            Text(
+                                      "How to Download",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                          ],
+                                        )),
+                                  ),
       ),
     );
   }
@@ -365,10 +410,33 @@ class HomeView extends GetView<HomeController> {
           controller.searchTextCTL.text = "www.facebook.com/watch";
           controller.isBrowsing.value = true;
           return;
-        } else if (index == 2) {
-          controller.searchTextCTL.text = 'www.instagram.com';
-          controller.isBrowsing.value = true;
-        } else {
+        } 
+        // else if (index == 1) {
+        //   controller.searchTextCTL.text = 'likee.video/m_trending';
+        //   // controller.searchTextCTL.text = 'likee.video/m_';
+        //   controller.isBrowsing.value = true;
+        // } 
+        // else if (index == 2) {
+        //   controller.searchTextCTL.text = 'instagram.com/reels/';
+        //   controller.isBrowsing.value = true;
+        // } 
+        // else if (index == 3) {
+        //   controller.searchTextCTL.text = 'tiktok.com/foryou';
+        //   controller.isBrowsing.value = true;
+        // } 
+        // else if (index == 4) {
+        //   controller.searchTextCTL.text = 'pinterest.com';
+        //   controller.isBrowsing.value = true;
+        // } 
+        // else if (index == 5) {
+        //   controller.searchTextCTL.text = 'twitter.com';
+        //   controller.isBrowsing.value = true;
+        // } 
+        // else if (index == 6) {
+        //   controller.searchTextCTL.text = 'vimeo.com/watch';
+        //   controller.isBrowsing.value = true;
+        // } 
+        else {
           controller.searchTextCTL.text = "";
           Get.toNamed(Routes.SocialIconsView, arguments: index);
           controller.selectedIndex.value = index;
@@ -480,146 +548,121 @@ class HomeView extends GetView<HomeController> {
   Widget _textInput(TextEditingController ctl, String hint,
       TextInputType inputType, isPassword) {
     return Center(
-      child: Container(
-        height: SizeConfig.blockSizeVertical * 14,
-        width: SizeConfig.blockSizeHorizontal * 90,
-        decoration: BoxDecoration(
-          color: Colors.grey.shade200,
-          // color: AppColors.background_color,
-          borderRadius:
-              BorderRadius.circular(SizeConfig.blockSizeHorizontal * 2),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5), // Shadow color
-              spreadRadius: 1, // How far the shadow spreads
-              blurRadius: 2, // The blur radius for the shadow
-              offset: Offset(0, 3), // Offset of the shadow (x, y)
-            ),
-          ],
-        ),
-        // elevation: 5,
-        // shape:
-        // RoundedRectangleBorder(side: BorderSide(color: AppColors.navColors)),
-        margin: EdgeInsets.symmetric(
-            horizontal: SizeConfig.blockSizeHorizontal * 3),
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                verticalSpace(SizeConfig.blockSizeVertical * 1),
-                Container(
-                  margin: EdgeInsets.only(
-                      left: SizeConfig.blockSizeHorizontal * 2,
-                      right: SizeConfig.blockSizeHorizontal * 2),
-                  // padding: EdgeInsets.symmetric(
-                  //     horizontal: SizeConfig.blockSizeHorizontal * 2),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5), // Shadow color
-                        spreadRadius: 1, // How far the shadow spreads
-                        blurRadius: 2, // The blur radius for the shadow
-                        offset: Offset(0, 3), // Offset of the shadow (x, y)
-                      ),
-                    ],
-                  ),
-                  child:
-                      // horizontalSpace(SizeConfig.blockSizeHorizontal * 3),
-                      TextFormField(
-                    controller: ctl,
-                    obscureText: isPassword,
-                    keyboardType: inputType,
-                    cursorColor: AppColors.background_color,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: AppColors.background_color,
-                      fontSize: SizeConfig.blockSizeHorizontal * 3.5,
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(0, SizeConfig.screenHeight*0.03, 0, 0),
+        child: Container(
+          // height: SizeConfig.blockSizeVertical * 14,
+          width: SizeConfig.blockSizeHorizontal * 90,
+          decoration: BoxDecoration(
+            color: Colors.grey.shade200,
+            // color: AppColors.background_color,
+            borderRadius:
+                BorderRadius.circular(SizeConfig.blockSizeHorizontal * 2),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5), // Shadow color
+                spreadRadius: 1, // How far the shadow spreads
+                blurRadius: 2, // The blur radius for the shadow
+                offset: Offset(0, 3), // Offset of the shadow (x, y)
+              ),
+            ],
+          ),
+          // elevation: 5,
+          // shape:
+          // RoundedRectangleBorder(side: BorderSide(color: AppColors.navColors)),
+          margin: EdgeInsets.symmetric(
+              horizontal: SizeConfig.blockSizeHorizontal * 3),
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  verticalSpace(SizeConfig.blockSizeVertical * 1),
+                  Container(
+                    margin: EdgeInsets.only(
+                        left: SizeConfig.blockSizeHorizontal * 2,
+                        right: SizeConfig.blockSizeHorizontal * 2),
+                    // padding: EdgeInsets.symmetric(
+                    //     horizontal: SizeConfig.blockSizeHorizontal * 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5), // Shadow color
+                          spreadRadius: 1, // How far the shadow spreads
+                          blurRadius: 2, // The blur radius for the shadow
+                          offset: Offset(0, 3), // Offset of the shadow (x, y)
+                        ),
+                      ],
                     ),
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.only(
-                          left: SizeConfig.blockSizeHorizontal * 2),
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      hintText: hint,
-                    ),
-                  ),
-                ),
-                verticalSpace(SizeConfig.blockSizeVertical * 1),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        getClipboardData();
-                      },
-                      child: Container(
-                        height: SizeConfig.blockSizeVertical * 5,
-                        width: SizeConfig.blockSizeHorizontal * 40,
-                        decoration: BoxDecoration(
-                            color: Colors.grey.shade300,
-                            borderRadius: BorderRadius.circular(
-                                SizeConfig.blockSizeHorizontal * 2)),
-                        child: Center(child: Text("Paste Link")),
-                      ),
-                    ),
-                    controller.isBrowsing.value
-                        ? InkWell(
-                            onTap: () {
-                              controller.searchTextCTL.text = "";
-                              controller.isBrowsing.value = false;
-                              controller.videos.clear();
-                            },
-                            child: Icon(Icons.close),
-                          )
-                        : InkWell(
-                            onTap: () {
-                              String link = controller.searchTextCTL.text;
-
-                              if (link.contains("youtube") ||
-                                  link.contains("google") ||
-                                  link.contains("googlevideo") ||
-                                  link.contains("youtu.be") ||
-                                  link.contains("ytimg")) {
-                                ComFunction.showInfoDialog(
-                                  title: "Invalid URL",
-                                  msg: "Please enter a valid URL",
-                                );
-                              } else {
-                                if (link.contains("tiktok")) {
-                                  controller.callTiktokApi(link);
+                    child:
+                        // horizontalSpace(SizeConfig.blockSizeHorizontal * 3),
+                        TextFormField(
+                                            controller: ctl,
+                                            obscureText: isPassword,
+                                            keyboardType: inputType,
+                                            cursorColor: AppColors.Text_color,
+                                            textAlign: TextAlign.left,
+                                            // textAlign: TextAlign.center,
+                                            style: TextStyle(
+                        color: AppColors.Text_color,
+                        // fontSize: SizeConfig.blockSizeHorizontal * 3.5,
+                        fontSize: SizeConfig.blockSizeHorizontal * 6,
+                                            ),
+                                            decoration: InputDecoration(
+                        // hintStyle: ,
+                        contentPadding: EdgeInsets.only(
+                            left: SizeConfig.blockSizeHorizontal * 2),
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        hintText: hint,
+                        suffix: InkWell(
+                          onTap: (){
+                            String link = controller.searchTextCTL.text;
+                            
+                                if (link.contains("youtube") ||
+                                    link.contains("google") ||
+                                    link.contains("googlevideo") ||
+                                    link.contains("youtu.be") ||
+                                    link.contains("ytimg")) {
+                                  ComFunction.showInfoDialog(
+                                    title: "Invalid URL",
+                                    msg: "Please enter a valid URL",
+                                  );
                                 } else {
-                                  if (link.contains("facebook") ||
-                                      link.contains("fb")) {
-                                    controller.searchTextCTL.text = link;
-                                    controller.isBrowsing.value = true;
-                                    // controller.callFacebookApi(link);
+                                  if (link.contains("tiktok")) {
+                                    controller.callTiktokApi(link);
                                   } else {
-                                    if (link.contains("instagram")) {
+                                    if (link.contains("facebook") ||
+                                        link.contains("fb")) {
                                       controller.searchTextCTL.text = link;
                                       controller.isBrowsing.value = true;
-                                      // controller.callInstagramApi(link);
+                                      // controller.callFacebookApi(link);
                                     } else {
-                                      if (link.contains("pin")) {
-                                        // controller.callPinterestApi(link);
+                                      if (link.contains("instagram")) {
                                         controller.searchTextCTL.text = link;
                                         controller.isBrowsing.value = true;
+                                        // controller.callInstagramApi(link);
                                       } else {
-                                        if (link.contains("l.likee")) {
-                                          // controller.searchTextCTL.text = link;
-                                          // controller.isBrowsing.value = true;
-                                          controller.callLikeeApi(link);
+                                        if (link.contains("pin")) {
+                                          // controller.callPinterestApi(link);
+                                          controller.searchTextCTL.text = link;
+                                          controller.isBrowsing.value = true;
                                         } else {
-                                          if (link.contains("x.com")) {
-                                            controller.callTwitterApi(link);
+                                          if (link.contains("likee")) {
+                                            // controller.searchTextCTL.text = link;
+                                            // controller.isBrowsing.value = true;
+                                            controller.callLikeeApi(link);
                                           } else {
-                                            if (link.contains("vimeo.com")) {
-                                              controller.callVimeoApi(link);
+                                            if (link.contains("twitter.com")) {
+                                              controller.callTwitterApi(link);
+                                            } else {
+                                              if (link.contains("vimeo")) {
+                                                controller.callVimeoApi(link);
+                                              }
                                             }
                                           }
                                         }
@@ -627,30 +670,135 @@ class HomeView extends GetView<HomeController> {
                                     }
                                   }
                                 }
-                              }
-                              // controller.searchTextCTL.clear();
-                            },
-                            child: Container(
-                              height: SizeConfig.blockSizeVertical * 5,
-                              width: SizeConfig.blockSizeHorizontal * 40,
-                              decoration: BoxDecoration(
-                                  color: AppColors.donwload_button_color,
-                                  borderRadius: BorderRadius.circular(
-                                      SizeConfig.blockSizeHorizontal * 2)),
-                              child: Center(
-                                  child: Text(
-                                "Download",
-                                style: TextStyle(color: Colors.white),
-                              )),
-                            )),
-                  ],
-                ),
-                // SizedBox(
-                //     height:
-                //         16), // Add some space between the TextFormField and the button
-              ],
-            ),
-          ],
+                          },
+                          child: Container(
+                                  height: SizeConfig.blockSizeVertical * 5,
+                                  width: SizeConfig.blockSizeHorizontal * 10,
+                                  decoration: BoxDecoration(
+                                      color: AppColors.donwload_button_color,
+                                      borderRadius: BorderRadius.circular(
+                                          SizeConfig.blockSizeHorizontal * 2)),
+                                  child: 
+                                  // Center(
+                                  //     child: Text(
+                                  //   "Download",
+                                  //   style: TextStyle(color: Colors.white),
+                                  // )
+                                  // ),
+                                  Center(
+                                      child: 
+                                      Icon(Icons.downloading_rounded,
+                                      color: AppColors.white,
+                                      )
+                                  ),
+                                ),
+                        )
+                                            ),
+                                          ),
+                  ),
+                  verticalSpace(SizeConfig.blockSizeVertical * 1),
+      
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //   children: [
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         getClipboardData();
+                  //       },
+                  //       child: Container(
+                  //         height: SizeConfig.blockSizeVertical * 5,
+                  //         width: SizeConfig.blockSizeHorizontal * 40,
+                  //         decoration: BoxDecoration(
+                  //             color: Colors.grey.shade300,
+                  //             borderRadius: BorderRadius.circular(
+                  //                 SizeConfig.blockSizeHorizontal * 2)),
+                  //         child: Center(child: Text("Paste Link")),
+                  //       ),
+                  //     ),
+                  //     controller.isBrowsing.value
+                  //         ? InkWell(
+                  //             onTap: () {
+                  //               controller.searchTextCTL.text = "";
+                  //               controller.isBrowsing.value = false;
+                  //               controller.videos.clear();
+                  //             },
+                  //             child: Icon(Icons.close),
+                  //           )
+                  //         : InkWell(
+                  //             onTap: () {
+                  //               String link = controller.searchTextCTL.text;
+      
+                  //               if (link.contains("youtube") ||
+                  //                   link.contains("google") ||
+                  //                   link.contains("googlevideo") ||
+                  //                   link.contains("youtu.be") ||
+                  //                   link.contains("ytimg")) {
+                  //                 ComFunction.showInfoDialog(
+                  //                   title: "Invalid URL",
+                  //                   msg: "Please enter a valid URL",
+                  //                 );
+                  //               } else {
+                  //                 if (link.contains("tiktok")) {
+                  //                   controller.callTiktokApi(link);
+                  //                 } else {
+                  //                   if (link.contains("facebook") ||
+                  //                       link.contains("fb")) {
+                  //                     controller.searchTextCTL.text = link;
+                  //                     controller.isBrowsing.value = true;
+                  //                     // controller.callFacebookApi(link);
+                  //                   } else {
+                  //                     if (link.contains("instagram")) {
+                  //                       controller.searchTextCTL.text = link;
+                  //                       controller.isBrowsing.value = true;
+                  //                       // controller.callInstagramApi(link);
+                  //                     } else {
+                  //                       if (link.contains("pin")) {
+                  //                         // controller.callPinterestApi(link);
+                  //                         controller.searchTextCTL.text = link;
+                  //                         controller.isBrowsing.value = true;
+                  //                       } else {
+                  //                         if (link.contains("l.likee")) {
+                  //                           // controller.searchTextCTL.text = link;
+                  //                           // controller.isBrowsing.value = true;
+                  //                           controller.callLikeeApi(link);
+                  //                         } else {
+                  //                           if (link.contains("x.com")) {
+                  //                             controller.callTwitterApi(link);
+                  //                           } else {
+                  //                             if (link.contains("vimeo.com")) {
+                  //                               controller.callVimeoApi(link);
+                  //                             }
+                  //                           }
+                  //                         }
+                  //                       }
+                  //                     }
+                  //                   }
+                  //                 }
+                  //               }
+                  //               // controller.searchTextCTL.clear();
+                  //             },
+                  //             child: Container(
+                  //               height: SizeConfig.blockSizeVertical * 5,
+                  //               width: SizeConfig.blockSizeHorizontal * 40,
+                  //               decoration: BoxDecoration(
+                  //                   color: AppColors.donwload_button_color,
+                  //                   borderRadius: BorderRadius.circular(
+                  //                       SizeConfig.blockSizeHorizontal * 2)),
+                  //               child: Center(
+                  //                   child: Text(
+                  //                 "Download",
+                  //                 style: TextStyle(color: Colors.white),
+                  //               )),
+                  //             )),
+                  //   ],
+                  // ),
+                  // SizedBox(
+                  //     height:
+                  //         16), // Add some space between the TextFormField and the button
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -769,8 +917,12 @@ class HomeView extends GetView<HomeController> {
       thumbnailPath: (await getTemporaryDirectory()).path,
 
       imageFormat: ImageFormat.JPEG,
-      maxHeight:
-          64, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+      maxWidth: 512,
+      maxHeight: 512,
+      // imageFormat: ImageFormat.PNG,
+      // maxHeight:
+      //     64, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+      // quality: 75,
       quality: 75,
     );
     print("thumbnail: $thumb");

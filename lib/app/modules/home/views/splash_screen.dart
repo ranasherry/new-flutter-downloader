@@ -31,12 +31,25 @@ class SplashScreen extends GetView<SplashController> {
                 padding: EdgeInsets.only(
                     top: SizeConfig.blockSizeVertical * 20,
                     left: SizeConfig.blockSizeHorizontal * 19),
-                child: Image.asset(
+                child: 
+                ClipRRect(
+  borderRadius: BorderRadius.circular(20), // Image border
+  child: Image.asset(
                   AppImages.splash_icon,
                   width: SizeConfig.blockSizeHorizontal * 60,
-                  height: SizeConfig.blockSizeVertical * 30,
-                  // fit: BoxFit.cover,
+                    height: SizeConfig.blockSizeVertical * 30,
+                  fit: BoxFit.cover,
                 ),
+)
+                // ClipRRect(
+                //   borderRadius: BorderRadius.circular(200),
+                //   child: Image.asset(
+                //     AppImages.splash_icon,
+                //     width: SizeConfig.blockSizeHorizontal * 60,
+                //     height: SizeConfig.blockSizeVertical * 30,
+                //     // fit: BoxFit.cover,
+                //   ),
+                // ),
               ),
               // Opacity(
               //   opacity: 0.7,

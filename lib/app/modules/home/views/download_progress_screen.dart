@@ -193,6 +193,10 @@ class DownloadProgressScreen extends GetView<HomeController> {
             //   width: SizeConfig.blockSizeHorizontal * 50,
             // ),
             verticalSpace(SizeConfig.blockSizeVertical * 2),
+            Image.asset(AppImages.empty_folder,
+            color: Colors.grey,
+            scale: 4,
+            ),
             Text(
               "Nothing Found!",
               style: TextStyle(

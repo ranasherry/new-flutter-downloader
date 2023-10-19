@@ -332,6 +332,10 @@ class WhatsappFeaturesView extends GetView<WhatsappFeaturesController> {
           //   width: SizeConfig.blockSizeHorizontal * 50,
           // ),
           verticalSpace(SizeConfig.blockSizeVertical * 2),
+          Image.asset(AppImages.empty_folder,
+            color: Colors.grey,
+            scale: 4,
+            ),
           Text(
             "Nothing Found!",
             style: TextStyle(fontSize: 24),
@@ -357,6 +361,10 @@ class WhatsappFeaturesView extends GetView<WhatsappFeaturesController> {
           //   width: SizeConfig.blockSizeHorizontal * 50,
           // ),
           verticalSpace(SizeConfig.blockSizeVertical * 2),
+          Image.asset(AppImages.empty_folder,
+            color: Colors.grey,
+            scale: 4,
+            ),
           Text(
             "Nothing Found!",
             style: TextStyle(fontSize: 24),

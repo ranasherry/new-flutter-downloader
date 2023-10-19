@@ -8,11 +8,11 @@ import 'package:video_downloader/app/utils/colors.dart';
 
 class StyleSheet {
   static const home_text = TextStyle(
-      fontSize: 25, fontWeight: FontWeight.bold, color: AppColors.white);
+      fontSize: 25, fontWeight: FontWeight.bold, color: AppColors.Text_color);
   static const home_sub_text = TextStyle(
       fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.white);
   static const Setting_text = TextStyle(
-      fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.white);
+      fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.Text_color);
 
   // static const view_heading =
   //     TextStyle(fontSize: 25, fontWeight: FontWeight.bold);
@@ -29,7 +29,7 @@ class StyleSheet {
   // static const Subscription_heading = TextStyle(
   //     color: AppColors.white_color, fontSize: 25, fontWeight: FontWeight.bold);
   static const Setting_Sub_heading = TextStyle(
-      color: AppColors.white, fontSize: 15, fontStyle: FontStyle.italic);
+      color: AppColors.Text_color, fontSize: 15, fontStyle: FontStyle.italic);
   // static const chipStyle = TextStyle(
   //     color: AppColors.white_color, fontSize: 13, fontStyle: FontStyle.italic);
   // static const Intro_Sub_heading_black = TextStyle(
