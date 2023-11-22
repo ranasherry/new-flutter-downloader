@@ -100,8 +100,8 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    // initBanner();
-    // initNative();
+    initBanner();
+    initNative();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       // backgroundColor: Color(0xFF1E1E1E),
@@ -111,13 +111,13 @@ class HomeView extends GetView<HomeController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Obx(() => isBannerLoaded.value &&
-              //         AdMobAdsProvider.instance.isAdEnable.value
-              //     ? Container(
-              //         height: AdSize.banner.height.toDouble(),
-              //         child: AdWidget(ad: myBanner))
-              //     : Container()),
-              // verticalSpace(SizeConfig.blockSizeVertical),
+              Obx(() => isBannerLoaded.value &&
+                      AdMobAdsProvider.instance.isAdEnable.value
+                  ? Container(
+                      height: AdSize.banner.height.toDouble(),
+                      child: AdWidget(ad: myBanner))
+                  : Container()),
+              verticalSpace(SizeConfig.blockSizeVertical),
 
                 // verticalSpace(SizeConfig.blockSizeVertical * 3),
                 Obx(() => controller.isBrowsing.value

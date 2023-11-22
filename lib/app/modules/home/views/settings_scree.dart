@@ -194,7 +194,7 @@ class SettingsScreen extends GetView<SettingsController> {
               ),
               onTap: () {
                 LaunchReview.launch(
-                  androidAppId: "com.allvideodownloader.vdmate.vmate.vidmake",
+                  androidAppId: "com.brokmeds.videodownloader.allvideodownloder.hdvideo",
                 );
               },
             ),
@@ -208,7 +208,7 @@ class SettingsScreen extends GetView<SettingsController> {
               ),
               onTap: () {
                 Share.share(
-                    'Download Your Favourite Videos from this Application https://play.google.com/store/apps/details?id=com.allvideodownloader.vdmate.vmate.vidmake');
+                    'Download Your Favourite Videos from this Application https://play.google.com/store/apps/details?id=com.brokmeds.videodownloader.allvideodownloder.hdvideo');
               },
             ),
             ListTile(

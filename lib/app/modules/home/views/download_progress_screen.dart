@@ -68,28 +68,46 @@ class DownloadProgressScreen extends GetView<HomeController> {
                     height: AdSize.banner.height.toDouble(),
                     child: AdWidget(ad: myBanner))
                 : Container()),
+                Obx(() => 
             controller.downloadingVideos.length <= 0
                 ? _noDownloadInProgress()
                 : downloadInProgress()
+                )
           ],
         ));
   }
 
+  // Widget downloadInProgress() {
+  //   return Expanded(
+  //     child: Obx(() => ListView.builder(
+  //         itemCount: controller.downloadingVideos.length,
+  //         itemBuilder: (BuildContext context, int index) {
+  //           // double downSize = controller.downloadingVideos[index].size /
+  //           //     controller.downloadingVideos[0].progress.value;
+  //           return _downloadingItem(
+  //               AppImages.thumbnail_demo,
+  //               "${controller.downloadingVideos[index].name}",
+  //               // controller.downloadingVideos[index].size
+  //               //     .toStringAsFixed(2),
+  //               "${controller.downloadingVideos[index].progress.value}",
+  //               index);
+  //         })),
+  //   );
+  // }
+
   Widget downloadInProgress() {
     return Expanded(
       child: Obx(() => ListView.builder(
-          itemCount: controller.downloadingVideos.length,
-          itemBuilder: (BuildContext context, int index) {
-            // double downSize = controller.downloadingVideos[index].size /
-            //     controller.downloadingVideos[0].progress.value;
-            return _downloadingItem(
-                AppImages.thumbnail_demo,
-                "${controller.downloadingVideos[index].name}",
-                // controller.downloadingVideos[index].size
-                //     .toStringAsFixed(2),
-                "${controller.downloadingVideos[index].progress.value}",
-                index);
-          })),
+        itemCount: controller.downloadingVideos.length,
+        itemBuilder: (BuildContext context, int index) {
+          return _downloadingItem(
+            AppImages.thumbnail_demo,
+            "${controller.downloadingVideos[index].name}",
+            "${controller.downloadingVideos[index].progress.value}",
+            index,
+          );
+        },
+      )),
     );
   }
 
@@ -112,7 +130,9 @@ class DownloadProgressScreen extends GetView<HomeController> {
           ],
           color: Colors.grey.shade300,
           borderRadius: BorderRadius.all(Radius.circular(10))),
-      child: Row(
+      child: 
+      // Obx(() => 
+      Row(
         children: [
           Container(
             width: SizeConfig.blockSizeHorizontal * 20,
@@ -140,44 +160,38 @@ class DownloadProgressScreen extends GetView<HomeController> {
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              // verticalSpace(SizeConfig.blockSizeVertical * 0.5),
-              // Obx(() => Container(
-              //       width: SizeConfig.blockSizeHorizontal * 50,
-              //       child: Text(
-              //         " ${controller.downloadingVideos[index].downloadedSize} / ${controller.downloadingVideos[index].size} MBs",
-              //         style: TextStyle(
-              //             fontSize: 14,
-              //             fontWeight: FontWeight.bold,
-              //             overflow: TextOverflow.fade,
-              //             color: Colors.grey),
-              //       ),
-              //     )),
+             
               verticalSpace(SizeConfig.blockSizeVertical),
               Row(
                 children: [
-                  Obx(() => Container(
-                        width: SizeConfig.blockSizeHorizontal * 50,
-                        child: LinearProgressIndicator(
-                          backgroundColor: Colors.grey[400],
-                          color: AppColors.background,
-                          value: controller
-                              .downloadingVideos[index].progress.value,
-                        ),
-                      )),
+                  Obx(() => Row(
+                    children: [
+                      Container(
+                            width: SizeConfig.blockSizeHorizontal * 50,
+                            child: LinearProgressIndicator(
+                              backgroundColor: Colors.grey[400],
+                              color: AppColors.background,
+                              value: controller
+                                  .downloadingVideos[index].progress.value,
+                            ),
+                          ),
+                          SizedBox(width: SizeConfig.blockSizeHorizontal * 5,),
+                      Container(
+                            // width: SizeConfig.blockSizeHorizontal * 50,
+                            child: Text("${((controller
+                                  .downloadingVideos[index].progress.value)*100).toInt()} %")
+                          ),
+                    ],
+                  )),
                   horizontalSpace(SizeConfig.blockSizeHorizontal * 5),
-                  // InkWell(
-                  //   onTap: () {},
-                  //   child: Icon(
-                  //     Icons.pause,
-                  //     color: Colors.grey[400],
-                  //   ),
-                  // ),
                 ],
               )
             ],
           ),
         ],
-      ),
+      )
+      // )
+      ,
     );
   }
 

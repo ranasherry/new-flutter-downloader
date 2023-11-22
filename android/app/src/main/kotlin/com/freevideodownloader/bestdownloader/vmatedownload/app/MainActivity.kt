@@ -1,4 +1,4 @@
-package com.freevideodownloader.bestdownloader.vmatedownload.app
+package com.brokmeds.videodownloader.allvideodownloder.hdvideo
 
 import io.flutter.embedding.android.FlutterActivity
 

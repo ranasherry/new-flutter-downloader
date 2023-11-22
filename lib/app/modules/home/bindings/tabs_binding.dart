@@ -11,9 +11,10 @@ class TabsBinding extends Bindings {
     Get.lazyPut<TabsController>(
       () => TabsController(),
     );
-    Get.lazyPut<HomeController>(
-      () => HomeController(),
-    );
+    Get.put(HomeController());
+    // Get.lazyPut<HomeController>(
+    //   () => HomeController(),
+    // );
     Get.lazyPut<DownloadProgressCTL>(
       () => DownloadProgressCTL(),
     );

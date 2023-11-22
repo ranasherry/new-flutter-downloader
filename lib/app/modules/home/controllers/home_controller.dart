@@ -47,6 +47,7 @@ class HomeController extends GetxController {
   RxList<Video> videos = <Video>[].obs;
   RxList<DownloadingVideo> downloadingVideos = <DownloadingVideo>[].obs;
   RxList<DownloadedVideo> downloadedVideos = <DownloadedVideo>[].obs;
+  List<DownloadingVideo> videosToRemove = [];
   final videoInfo = FlutterVideoInfo();
 
   ReceivePort _port = ReceivePort();
@@ -101,54 +102,147 @@ class HomeController extends GetxController {
   }
 
   void _bindBackgroundIsolate() {
-    bool isSuccess = IsolateNameServer.registerPortWithName(
-        _port.sendPort, 'downloader_send_port');
+  bool isSuccess = IsolateNameServer.registerPortWithName(
+    _port.sendPort, 'downloader_send_port');
 
-    if (!isSuccess) {
-      _unbindBackgroundIsolate();
-      _bindBackgroundIsolate();
-      return;
-    }
-    _port.listen((dynamic data) async {
-      // if (debug) {
-      //   print('UI Isolate Callback: $data');
-      // }
-
-      String? id = data[0];
-      DownloadTaskStatus? status = DownloadTaskStatus.values[data[1] as int];
-      int? progress = data[2];
-      for (DownloadingVideo video in downloadingVideos) {
-        if (video.taskId == id) {
-          video.progress.value = progress!.toDouble() / 100;
-          // var downloadedSize = (video.progress.value) * video.size;
-          // var downloadedSizeinMB = downloadedSize / 1024 / 1024;
-          // video.downloadedSize.value =
-          //     downloadedSize.toStringAsFixed(2) + " MB";
-          print("Downloading Progress: ${video.progress.value}");
-          // print("Downloaded Size: ${video.downloadedSize.value}");
-          if (status == DownloadTaskStatus.failed) {}
-          if (status == DownloadTaskStatus.complete) {
-            print("Download Complete");
-            downloadingVideos.removeWhere((element) => element.taskId == id);
-            await getDir();
-          }
-        }
-      }
-      if (taskId == id) {
-        print("Progress: $progress");
-
-        if (status == DownloadTaskStatus.complete) {}
-        if (status == DownloadTaskStatus.failed) {
-          print("Download Failed From Port..");
-        }
-      }
-    });
+  if (!isSuccess) {
+    _unbindBackgroundIsolate();
+    _bindBackgroundIsolate();
+    return;
   }
+
+  _port.listen((dynamic data) async {
+    String? id = data[0];
+    DownloadTaskStatus? status = DownloadTaskStatus.values[data[1] as int];
+    int? progress = data[2];
+
+    // List<DownloadingVideo> videosToRemove = [];
+
+    // downloadingBetween(id,progress,status,videosToRemove);
+     for (DownloadingVideo video in downloadingVideos) {
+      if (video.taskId == id) {
+        video.progress.value = progress!.toDouble() / 100;
+        print("Downloading Progress: ${video.progress.value}");
+        if (status == DownloadTaskStatus.failed) {
+          // Handle failure if needed
+        }
+        if (status == DownloadTaskStatus.complete) {
+          print("Download Complete");
+          videosToRemove.add(video);
+
+          // downloadingVideos.remove(video);
+        }
+      }
+    }
+
+    // Future.delayed(Duration(seconds: 2),(){
+      // print("inside removing for");
+      for (DownloadingVideo video in videosToRemove) {
+      downloadingVideos.remove(video);
+    }
+    // });
+
+    // for (DownloadingVideo video in videosToRemove) {
+    //   downloadingVideos.remove(video);
+    // }
+
+    // Future.delayed(Duration(seconds: 4),(){
+      // print("inside taskif if");
+      if (taskId == id) {
+      print("Progress: $progress");
+      if (status == DownloadTaskStatus.complete) {
+        print("taskId download complete");
+        // Handle completion if needed
+      }
+      if (status == DownloadTaskStatus.failed) {
+        print("Download Failed From Port..");
+      }
+    }
+
+    // });
+
+    // if (taskId == id) {
+    //   print("Progress: $progress");
+    //   if (status == DownloadTaskStatus.complete) {
+    //     print("taskId download complete");
+    //     // Handle completion if needed
+    //   }
+    //   if (status == DownloadTaskStatus.failed) {
+    //     print("Download Failed From Port..");
+    //   }
+    // }
+  });
+}
+
+// Future downloadingBetween(id,progress,status,videosToRemove) async {
+//   for (DownloadingVideo video in downloadingVideos) {
+//       if (video.taskId == id) {
+//         video.progress.value = progress!.toDouble() / 100;
+//         print("Downloading Progress: ${video.progress.value}");
+//         if (status == DownloadTaskStatus.failed) {
+//           // Handle failure if needed
+//         }
+//         if (status == DownloadTaskStatus.complete) {
+//           print("Download Complete");
+//           videosToRemove.add(video);
+
+//           // downloadingVideos.remove(video);
+//         }
+//       }
+//     }
+// }
+
+
+  // void _bindBackgroundIsolate() {
+  //   bool isSuccess = IsolateNameServer.registerPortWithName(
+  //       _port.sendPort, 'downloader_send_port');
+
+  //   if (!isSuccess) {
+  //     _unbindBackgroundIsolate();
+  //     _bindBackgroundIsolate();
+  //     return;
+  //   }
+  //   _port.listen((dynamic data) async {
+  //     // if (debug) {
+  //     //   print('UI Isolate Callback: $data');
+  //     // }
+
+  //     String? id = data[0];
+  //     DownloadTaskStatus? status = DownloadTaskStatus.values[data[1] as int];
+  //     int? progress = data[2];
+  //     for (DownloadingVideo video in downloadingVideos) {
+  //       if (video.taskId == id) {
+  //         video.progress.value = progress!.toDouble() / 100;
+  //         // var downloadedSize = (video.progress.value) * video.size;
+  //         // var downloadedSizeinMB = downloadedSize / 1024 / 1024;
+  //         // video.downloadedSize.value =
+  //         //     downloadedSize.toStringAsFixed(2) + " MB";
+  //         print("Downloading Progress: ${video.progress.value}");
+  //         // print("Downloaded Size: ${video.downloadedSize.value}");
+  //         if (status == DownloadTaskStatus.failed) {}
+  //         if (status == DownloadTaskStatus.complete) {
+  //           print("Download Complete");
+  //           downloadingVideos.removeWhere((element) => element.taskId == id);
+  //           await getDir();
+  //         }
+  //       }
+  //     }
+  //     if (taskId == id) {
+  //       print("Progress: $progress");
+
+  //       if (status == DownloadTaskStatus.complete) {}
+  //       if (status == DownloadTaskStatus.failed) {
+  //         print("Download Failed From Port..");
+  //       }
+  //     }
+  //   });
+  // }
 
   void _unbindBackgroundIsolate() {
     IsolateNameServer.removePortNameMapping('downloader_send_port');
   }
 
+  @pragma('vm:entry-point')
   static void downloadCallback(String id, int status, int progress) {
     final SendPort? send =
         IsolateNameServer.lookupPortByName('downloader_send_port');
@@ -279,8 +373,14 @@ class HomeController extends GetxController {
         progress: 0.0.obs,
         // downloadedSize: "0.0".obs
       );
-      downloadingVideos.add(downloadingTask);
-      videos.removeAt(index);
+      // downloadingVideos.add(downloadingTask);
+      // Future.delayed(Duration(seconds: 1),(){
+        downloadingVideos.add(downloadingTask);
+      // });
+      // Future.delayed(Duration(seconds: 2),(){
+        videos.removeAt(index);
+      // });
+      // videos.removeAt(index);
       print("video List: $videos");
 
       //?Temp Implementation
@@ -308,7 +408,7 @@ class HomeController extends GetxController {
       // );
       // downloadingVideos.add(downloadingTask);
       // videos.removeAt(index);
-      print("video List: $videos");
+      // print("video List: ${videos}");
     }
   }
 

@@ -1,4 +1,5 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:video_downloader/app/provider/admob_ads_provider.dart';
 import 'package:video_downloader/app/utils/app_strings.dart';
@@ -35,8 +36,11 @@ class TabsController extends GetxController {
     });
 
     await remoteConfig.fetchAndActivate().then((value) {
-      bool isAdEnable = remoteConfig.getBool("isAdEnable");
-      AdMobAdsProvider.instance.isAdEnable.value = isAdEnable;
+      if (kReleaseMode) {
+  bool isAdEnable = remoteConfig.getBool("isAdEnable");
+  AdMobAdsProvider.instance.isAdEnable.value = isAdEnable;
+      
+      
 
       AppStrings.ADMOB_APP_OPEN = remoteConfig.getString("appopen_ad");
       AppStrings.ADMOB_NATIVE = remoteConfig.getString("native_ad");
@@ -48,6 +52,7 @@ class TabsController extends GetxController {
       }
 
       print("Remote Ads: ${AppStrings.ADMOB_APP_OPEN}");
+      }
     });
     super.onInit();
   }
