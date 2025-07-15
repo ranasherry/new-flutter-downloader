@@ -16,12 +16,21 @@ class AppStrings {
   // static const INTER_UNITID = "ca-app-pub-7919904592089531/6235997447";
   // static const NATIVE_UNITID = "ca-app-pub-7919904592089531/7534473535";
 
-  //! Test Ads
+// Test ADS Ids
 
-  static String ADMOB_BANNER = "ca-app-pub-3940256099942544/6300978111";
-  static String ADMOB_INTERSTITIAL = "ca-app-pub-3940256099942544/1033173712";
-  static String ADMOB_APP_OPEN = "ca-app-pub-294702707100/177174717132";
-  static String ADMOB_NATIVE = "ca-app-pub-3940256099942544/2247696110";
-  static String ADMOB_REWARDED_Inter = "ca-app-pub-7371304701/7401881241";
-  static String ADMOB_REWARDED = "ca-app-pub-274070340/72747273749271";
+  // static String ADMOB_BANNER = "ca-app-pub-3940256099942544/9214589741";
+  // static String ADMOB_INTERSTITIAL = "ca-app-pub-3940256099942544/1033173712";
+  // static String ADMOB_APP_OPEN = "ca-app-pub-3940256099942544/9257395921";
+  // static String ADMOB_NATIVE = "ca-app-pub-3940256099942544/2247696110";
+  // static String ADMOB_REWARDED_Inter = "ca-app-pub-3940256099942544/5354046379";
+  // static String ADMOB_REWARDED = "ca-app-pub-3940256099942544/5224354917";
+
+  // Orignal ADS Ids
+
+  static String ADMOB_BANNER = "ca-app-pub-5938013301945330/7397020193";
+  static String ADMOB_INTERSTITIAL = "ca-app-pub-5938013301945330/8286494251";
+  static String ADMOB_APP_OPEN = "ca-app-pub-5938013301945330/5763438541";
+  static String ADMOB_NATIVE = "ca-app-pub-5938013301945330/5834756586";
+  static String ADMOB_REWARDED_Inter = "ca-app-pub-5938013301945330/1179096207";
+  static String ADMOB_REWARDED = "ca-app-pub-5938013301945330/7552932862";
 }

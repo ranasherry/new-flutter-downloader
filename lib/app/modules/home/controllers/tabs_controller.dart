@@ -20,14 +20,14 @@ class TabsController extends GetxController {
       minimumFetchInterval: const Duration(minutes: 5),
     ));
 
-    await remoteConfig.setDefaults(const {
-      "isAdEnable": false,
-      "native_ad": "ca-app-pub-3940256099942544/2247696110",
-      "banner_ad": "ca-app-pub-3940256099942544/6300978111",
-      "inter_ad": "ca-app-pub-3940256099942544/1033173712",
-      "appopen_ad": "ca-app-pub-294702707100/177174717132",
-      "app_id": "com.allvideodownloader.vdmate.vmate.vidmake"
-    });
+    // await remoteConfig.setDefaults(const {
+    //   "isAdEnable": false,
+    //   "native_ad": "ca-app-pub-3940256099942544/2247696110",
+    //   "banner_ad": "ca-app-pub-3940256099942544/6300978111",
+    //   "inter_ad": "ca-app-pub-3940256099942544/1033173712",
+    //   "appopen_ad": "ca-app-pub-294702707100/177174717132",
+    //   "app_id": "com.allvideodownloader.vdmate.vmate.vidmake"
+    // });
 
     remoteConfig.onConfigUpdated.listen((event) async {
       await remoteConfig.activate();
@@ -37,21 +37,19 @@ class TabsController extends GetxController {
 
     await remoteConfig.fetchAndActivate().then((value) {
       if (kReleaseMode) {
-  bool isAdEnable = remoteConfig.getBool("isAdEnable");
-  AdMobAdsProvider.instance.isAdEnable.value = isAdEnable;
-      
-      
+        bool isAdEnable = remoteConfig.getBool("isAdEnable");
+        AdMobAdsProvider.instance.isAdEnable.value = isAdEnable;
 
-      AppStrings.ADMOB_APP_OPEN = remoteConfig.getString("appopen_ad");
-      AppStrings.ADMOB_NATIVE = remoteConfig.getString("native_ad");
-      AppStrings.ADMOB_INTERSTITIAL = remoteConfig.getString("inter_ad");
-      AppStrings.ADMOB_BANNER = remoteConfig.getString("banner_ad");
+        // AppStrings.ADMOB_APP_OPEN = remoteConfig.getString("appopen_ad");
+        // AppStrings.ADMOB_NATIVE = remoteConfig.getString("native_ad");
+        // AppStrings.ADMOB_INTERSTITIAL = remoteConfig.getString("inter_ad");
+        // AppStrings.ADMOB_BANNER = remoteConfig.getString("banner_ad");
 
-      if (isAdEnable) {
-        AdMobAdsProvider.instance.initialize();
-      }
+        if (isAdEnable) {
+          AdMobAdsProvider.instance.initialize();
+        }
 
-      print("Remote Ads: ${AppStrings.ADMOB_APP_OPEN}");
+        print("Remote Ads: ${AppStrings.ADMOB_APP_OPEN}");
       }
     });
     super.onInit();

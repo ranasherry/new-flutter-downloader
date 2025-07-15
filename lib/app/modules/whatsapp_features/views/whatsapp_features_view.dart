@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_downloader/app/utils/colors.dart';
@@ -332,10 +331,11 @@ class WhatsappFeaturesView extends GetView<WhatsappFeaturesController> {
           //   width: SizeConfig.blockSizeHorizontal * 50,
           // ),
           verticalSpace(SizeConfig.blockSizeVertical * 2),
-          Image.asset(AppImages.empty_folder,
+          Image.asset(
+            AppImages.empty_folder,
             color: Colors.grey,
             scale: 4,
-            ),
+          ),
           Text(
             "Nothing Found!",
             style: TextStyle(fontSize: 24),
@@ -361,10 +361,11 @@ class WhatsappFeaturesView extends GetView<WhatsappFeaturesController> {
           //   width: SizeConfig.blockSizeHorizontal * 50,
           // ),
           verticalSpace(SizeConfig.blockSizeVertical * 2),
-          Image.asset(AppImages.empty_folder,
+          Image.asset(
+            AppImages.empty_folder,
             color: Colors.grey,
             scale: 4,
-            ),
+          ),
           Text(
             "Nothing Found!",
             style: TextStyle(fontSize: 24),
@@ -379,14 +380,16 @@ class WhatsappFeaturesView extends GetView<WhatsappFeaturesController> {
     );
   }
 
-  void findingStatus() {
-    String status = "";
-    String video = "";
-    try {
-      Directory("android");
-      TextStyle textStyle = TextStyle(color: Get.textTheme.headline1!.color);
-    } catch (e) {
-      print(e);
-    }
-  }
+  //! Commented by jamal
+
+  // void findingStatus() {
+  //   String status = "";
+  //   String video = "";
+  //   try {
+  //     Directory("android");
+  //     TextStyle textStyle = TextStyle(color: Get.textTheme.headline1!.color);
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 }

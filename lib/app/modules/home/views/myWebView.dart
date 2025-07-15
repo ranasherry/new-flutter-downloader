@@ -60,11 +60,11 @@ class _MyWebViewState extends State<MyWebView> {
           mediaPlaybackRequiresUserGesture: true,
           useOnLoadResource: true,
           userAgent:
-          "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148"
+              "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148"
 
           // userAgent:
           //     "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36"
-              ),
+          ),
       android: AndroidInAppWebViewOptions(
         useHybridComposition: true,
       ),
@@ -78,12 +78,12 @@ class _MyWebViewState extends State<MyWebView> {
     return Scaffold(
       body: Container(
         width: SizeConfig.screenWidth,
-        height: SizeConfig.screenHeight ,
+        height: SizeConfig.screenHeight,
         color: Colors.red,
         child: InAppWebView(
           key: webViewKey,
-          initialUrlRequest:
-              URLRequest(url: Uri.parse(controller.searchTextCTL.text)),
+          initialUrlRequest: URLRequest(
+              url: WebUri.uri(Uri.parse(controller.searchTextCTL.text))),
           initialOptions: options,
           shouldInterceptFetchRequest: (InAppWebViewController controller,
               FetchRequest ajaxRequest) async {
@@ -242,7 +242,8 @@ class _MyWebViewState extends State<MyWebView> {
                     .replaceAll("intent://", "");
                 print("Changed URL: $changedUrl");
                 thisController.loadUrl(
-                    urlRequest: URLRequest(url: Uri.parse(changedUrl)));
+                    urlRequest:
+                        URLRequest(url: WebUri.uri(Uri.parse(changedUrl))));
                 controller.CheckShareChatVideoURLFromWeb(thisController);
               }
             }

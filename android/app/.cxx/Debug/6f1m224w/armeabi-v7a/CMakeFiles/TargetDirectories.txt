@@ -1,0 +1,2 @@
+C:/IzzaTech/new-flutter-downloader/android/app/.cxx/Debug/6f1m224w/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/IzzaTech/new-flutter-downloader/android/app/.cxx/Debug/6f1m224w/armeabi-v7a/CMakeFiles/rebuild_cache.dir

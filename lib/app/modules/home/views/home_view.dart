@@ -11,6 +11,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_downloader/app/modules/home/controllers/tabs_controller.dart';
 import 'package:video_downloader/app/modules/home/views/myWebView.dart';
+import 'package:video_downloader/app/provider/adshandler.dart';
 import 'package:video_downloader/app/routes/app_pages.dart';
 import 'package:video_downloader/app/utils/CM.dart';
 import 'package:video_downloader/app/utils/colors.dart';
@@ -405,7 +406,8 @@ class HomeView extends GetView<HomeController> {
   Widget _selectApp(String name, String img, int index, int color) {
     return InkWell(
       onTap: () {
-        AdMobAdsProvider.instance.showInterstitialAd();
+        // AdMobAdsProvider.instance.showInterstitialAd();
+        AdsHandler().getAd();
         if (index == 0) {
           controller.searchTextCTL.text = "www.facebook.com/watch";
           controller.isBrowsing.value = true;

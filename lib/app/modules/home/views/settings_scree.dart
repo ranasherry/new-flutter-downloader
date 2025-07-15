@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:launch_review/launch_review.dart';
+import 'package:in_app_review/in_app_review.dart';
 // import 'package:ripple_animation/ripple_animation.dart';
 
 import 'package:share_plus/share_plus.dart';
@@ -132,28 +132,33 @@ class SettingsScreen extends GetView<SettingsController> {
                 Get.toNamed(Routes.HOW_TO_SCREEN);
               },
             ),
-            Divider(),
-            _myHeadings("Download"),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: Icon(
-                Icons.sd_storage,
-                color: AppColors.background,
-              ),
-              title: Text(
-                "Storage Location",
-                style: StyleSheet.Setting_Sub_heading,
-                // style: GoogleFonts.pacifico(color: AppColors.black1)
-              ),
-              subtitle: Padding(
-                padding:
-                    EdgeInsets.only(top: SizeConfig.blockSizeVertical * 0.5),
-                child: Text("Downloads/video Downloader videos/",
-                    style: TextStyle(color: Colors.grey.shade600)
-                    // GoogleFonts.pacifico(color: Colors.grey.shade600)
-                    ),
-              ),
-            ),
+            // Divider(),
+            // _myHeadings("Download"),
+            // GestureDetector(
+            //   onTap: () {
+            //     // controller.openDownloadDirectory(context);
+            //   },
+            //   child: ListTile(
+            //     contentPadding: EdgeInsets.zero,
+            //     leading: Icon(
+            //       Icons.sd_storage,
+            //       color: AppColors.background,
+            //     ),
+            //     title: Text(
+            //       "Storage Location",
+            //       style: StyleSheet.Setting_Sub_heading,
+            //       // style: GoogleFonts.pacifico(color: AppColors.black1)
+            //     ),
+            //     subtitle: Padding(
+            //       padding:
+            //           EdgeInsets.only(top: SizeConfig.blockSizeVertical * 0.5),
+            //       child: Text("Downloads/video Downloader videos/",
+            //           style: TextStyle(color: Colors.grey.shade600)
+            //           // GoogleFonts.pacifico(color: Colors.grey.shade600)
+            //           ),
+            //     ),
+            //   ),
+            // ),
             Divider(),
             _myHeadings("Help"),
             // ListTile(
@@ -192,11 +197,20 @@ class SettingsScreen extends GetView<SettingsController> {
                 style: StyleSheet.Setting_Sub_heading,
                 // style: GoogleFonts.pacifico(color: AppColors.black1)
               ),
-              onTap: () {
-                LaunchReview.launch(
-                  androidAppId: "com.brokmeds.videodownloader.allvideodownloder.hdvideo",
-                );
+               onTap: () async {
+                final InAppReview inAppReview = InAppReview.instance;
+                if (await inAppReview.isAvailable()) {
+                  inAppReview.openStoreListing(
+                    appStoreId: 'com.brokmeds.videodownloader.allvideodownloder.hdvideo',
+                  );
+                }
               },
+              // onTap: () {
+              //   LaunchReview.launch(
+              //     androidAppId:
+              //         "com.brokmeds.videodownloader.allvideodownloder.hdvideo",
+              //   );
+              // },
             ),
             ListTile(
               contentPadding: EdgeInsets.zero,

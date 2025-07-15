@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:video_downloader/app/data/downloaded_video.dart';
 import 'package:video_downloader/app/modules/home/controllers/download_progress_ctl.dart';
 import 'package:video_downloader/app/modules/home/controllers/downloaded_controller.dart';
 import 'package:video_downloader/app/modules/home/controllers/home_controller.dart';
@@ -91,40 +93,43 @@ class DownloadedScreen extends GetView<HomeController> {
       child: Container(
         padding: EdgeInsets.symmetric(
             horizontal: SizeConfig.blockSizeHorizontal * 2),
-        child: Obx(() => 
-        GridView.builder(
-  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-    mainAxisSpacing: 10,
-    crossAxisSpacing: 10,
-    crossAxisCount: 2, // Adjust the cross-axis count as per your design
-  ),
-  itemCount: controller.downloadedVideos.length,
-  itemBuilder: (BuildContext context, int index) {
-    return InkWell(
-      onTap: () {
-        Get.toNamed(Routes.VideoPlayer,
-            arguments: [controller.downloadedVideos[index].path]);
-      },
-      child: _downloadedItem(index),
-    );
-  },
-)
-        // ListView.builder(
-        //     itemCount: controller.downloadedVideos.length,
-        //     itemBuilder: (BuildContext context, int index) {
-        //       return InkWell(
-        //           onTap: () {
-        //             Get.toNamed(Routes.VideoPlayer,
-        //                 arguments: [controller.downloadedVideos[index].path]);
-        //           },
-        //           child: _downloadedItem(index));
-        //     })
+        child: Obx(() => GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    crossAxisCount:
+                        2, // Adjust the cross-axis count as per your design
+                  ),
+                  itemCount: controller.downloadedVideos.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return InkWell(
+                      onTap: () {
+                        Get.toNamed(Routes.VideoPlayer, arguments: [
+                          controller.downloadedVideos[index].path
+                        ]);
+                        print(
+                            "Path ${controller.downloadedVideos[index].path}");
+                      },
+                      child: _downloadedItem(index, context),
+                    );
+                  },
+                )
+            // ListView.builder(
+            //     itemCount: controller.downloadedVideos.length,
+            //     itemBuilder: (BuildContext context, int index) {
+            //       return InkWell(
+            //           onTap: () {
+            //             Get.toNamed(Routes.VideoPlayer,
+            //                 arguments: [controller.downloadedVideos[index].path]);
+            //           },
+            //           child: _downloadedItem(index));
+            //     })
             ),
       ),
     );
   }
 
-  Widget _downloadedItem(int index) {
+  Widget _downloadedItem(int index, BuildContext context) {
     return Stack(
       children: [
         Container(
@@ -190,76 +195,82 @@ class DownloadedScreen extends GetView<HomeController> {
                   //     // ),
                   //   ],
                   // ),
-                  Container(
-                    // width: SizeConfig.blockSizeHorizontal * 20,
-                    // height: SizeConfig.blockSizeVertical * 7,
-                    // color: Colors.amber,
-                    child: Stack(
-                      children: [
-                        Container(
-                          width: SizeConfig.blockSizeHorizontal * 40,
-                          height: SizeConfig.blockSizeVertical * 15,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: FutureBuilder(
-                                future:
-                                    _getImage(controller.downloadedVideos[index].path),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.done) {
-                                    if (snapshot.hasData) {
-                                      return Hero(
-                                        tag: controller.downloadedVideos[index].name,
-                                        child: Image.file(
-                                          File(snapshot.data.toString()),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      );
+                  GestureDetector(
+                    onLongPress: () =>
+                        _showMenu(context, controller.downloadedVideos[index]),
+                    child: Container(
+                      // width: SizeConfig.blockSizeHorizontal * 20,
+                      // height: SizeConfig.blockSizeVertical * 7,
+                      // color: Colors.amber,
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: SizeConfig.blockSizeHorizontal * 40,
+                            height: SizeConfig.blockSizeVertical * 15,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: FutureBuilder(
+                                  future: _getImage(
+                                      controller.downloadedVideos[index].path),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      if (snapshot.hasData) {
+                                        return Hero(
+                                          tag: controller
+                                              .downloadedVideos[index].name,
+                                          child: Image.file(
+                                            File(snapshot.data.toString()),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        );
+                                      } else {
+                                        return Center(
+                                          child: Image.asset(
+                                            AppImages.thumbnail_demo,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        );
+                                      }
                                     } else {
                                       return Center(
                                         child: Image.asset(
                                           AppImages.thumbnail_demo,
-                                          fit: BoxFit.cover,
+                                          fit: BoxFit.fitHeight,
                                         ),
                                       );
                                     }
-                                  } else {
-                                    return Center(
-                                      child: Image.asset(
-                                        AppImages.thumbnail_demo,
-                                        fit: BoxFit.fitHeight,
-                                      ),
-                                    );
-                                  }
-                                }),
+                                  }),
 
-                            //  Image.asset(
-                            //   img,
-                            //   fit: BoxFit.cover,
-                            // ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: SizeConfig.blockSizeVertical * 0.25,
-                                horizontal: SizeConfig.blockSizeHorizontal),
-                            decoration: BoxDecoration(
-                                color: AppColors.background,
-                                borderRadius: BorderRadius.only(
-                                    bottomRight: Radius.circular(10),
-                                    topLeft: Radius.circular(10))),
-                            child: Text(
-                              "${controller.downloadedVideos[index].duration}",
-                              style: TextStyle(color: AppColors.white, fontSize: 10),
+                              //  Image.asset(
+                              //   img,
+                              //   fit: BoxFit.cover,
+                              // ),
                             ),
                           ),
-                        ),
-                      ],
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: SizeConfig.blockSizeVertical * 0.25,
+                                  horizontal: SizeConfig.blockSizeHorizontal),
+                              decoration: BoxDecoration(
+                                  color: AppColors.background,
+                                  borderRadius: BorderRadius.only(
+                                      bottomRight: Radius.circular(10),
+                                      topLeft: Radius.circular(10))),
+                              child: Text(
+                                "${controller.downloadedVideos[index].duration}",
+                                style: TextStyle(
+                                    color: AppColors.white, fontSize: 10),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                                    verticalSpace(SizeConfig.blockSizeVertical * 0.5),
+                  verticalSpace(SizeConfig.blockSizeVertical * 0.5),
 
                   // horizontalSpace(SizeConfig.blockSizeHorizontal * 5),
                   Column(
@@ -268,7 +279,7 @@ class DownloadedScreen extends GetView<HomeController> {
                     children: [
                       Container(
                         // width: SizeConfig.blockSizeHorizontal * 50,
-                        width: SizeConfig.screenWidth *0.3,
+                        width: SizeConfig.screenWidth * 0.3,
                         child: Center(
                           child: Text(
                             "${controller.downloadedVideos[index].name}",
@@ -391,9 +402,10 @@ class DownloadedScreen extends GetView<HomeController> {
             //   width: SizeConfig.blockSizeHorizontal * 50,
             // ),
             verticalSpace(SizeConfig.blockSizeVertical * 2),
-            Image.asset(AppImages.empty_folder,
-            color: Colors.grey,
-            scale: 4,
+            Image.asset(
+              AppImages.empty_folder,
+              color: Colors.grey,
+              scale: 4,
             ),
             Text(
               "Nothing Found!",
@@ -407,6 +419,36 @@ class DownloadedScreen extends GetView<HomeController> {
               style: TextStyle(
                   color: Colors.grey,
                   fontSize: SizeConfig.blockSizeHorizontal * 4),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showMenu(BuildContext context, DownloadedVideo downloadedVideo) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => Container(
+        padding: const EdgeInsets.all(10),
+        child: Wrap(
+          children: [
+            ListTile(
+              leading: Icon(Icons.share),
+              title: Text('Share'),
+              onTap: () {
+                controller.shareVideo(downloadedVideo);
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.delete),
+              title: Text('Delete'),
+              onTap: () {
+                // onDelete(); // Call delete callback
+                controller.deleteVideo(downloadedVideo);
+                Navigator.pop(context);
+              },
             ),
           ],
         ),

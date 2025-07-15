@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:video_downloader/app/modules/home/controllers/home_controller.dart';
 import 'package:video_downloader/app/provider/admob_ads_provider.dart';
+import 'package:video_downloader/app/provider/adshandler.dart';
 
 import '../../../utils/CM.dart';
 import '../../../utils/app_strings.dart';
@@ -101,7 +102,8 @@ class SocialIconsView extends GetView<HomeController> {
         ),
         leading: GestureDetector(
             onTap: () {
-              AdMobAdsProvider.instance.showInterstitialAd();
+              // AdMobAdsProvider.instance.showInterstitialAd();
+              AdsHandler().getAd();
               controller.searchTextCTL.clear();
               Get.back();
             },

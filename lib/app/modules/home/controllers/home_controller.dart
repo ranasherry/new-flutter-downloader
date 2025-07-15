@@ -27,7 +27,6 @@ import 'package:flutter_video_info/flutter_video_info.dart';
 import 'package:path/path.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/services.dart';
-import 'package:flutter_share/flutter_share.dart';
 
 import '../../../utils/images.dart';
 import '../../../utils/size_config.dart';
@@ -102,77 +101,77 @@ class HomeController extends GetxController {
   }
 
   void _bindBackgroundIsolate() {
-  bool isSuccess = IsolateNameServer.registerPortWithName(
-    _port.sendPort, 'downloader_send_port');
+    bool isSuccess = IsolateNameServer.registerPortWithName(
+        _port.sendPort, 'downloader_send_port');
 
-  if (!isSuccess) {
-    _unbindBackgroundIsolate();
-    _bindBackgroundIsolate();
-    return;
-  }
-
-  _port.listen((dynamic data) async {
-    String? id = data[0];
-    DownloadTaskStatus? status = DownloadTaskStatus.values[data[1] as int];
-    int? progress = data[2];
-
-    // List<DownloadingVideo> videosToRemove = [];
-
-    // downloadingBetween(id,progress,status,videosToRemove);
-     for (DownloadingVideo video in downloadingVideos) {
-      if (video.taskId == id) {
-        video.progress.value = progress!.toDouble() / 100;
-        print("Downloading Progress: ${video.progress.value}");
-        if (status == DownloadTaskStatus.failed) {
-          // Handle failure if needed
-        }
-        if (status == DownloadTaskStatus.complete) {
-          print("Download Complete");
-          videosToRemove.add(video);
-
-          // downloadingVideos.remove(video);
-        }
-      }
+    if (!isSuccess) {
+      _unbindBackgroundIsolate();
+      _bindBackgroundIsolate();
+      return;
     }
 
-    // Future.delayed(Duration(seconds: 2),(){
+    _port.listen((dynamic data) async {
+      String? id = data[0];
+      DownloadTaskStatus? status = DownloadTaskStatus.values[data[1] as int];
+      int? progress = data[2];
+
+      // List<DownloadingVideo> videosToRemove = [];
+
+      // downloadingBetween(id,progress,status,videosToRemove);
+      for (DownloadingVideo video in downloadingVideos) {
+        if (video.taskId == id) {
+          video.progress.value = progress!.toDouble() / 100;
+          print("Downloading Progress: ${video.progress.value}");
+          if (status == DownloadTaskStatus.failed) {
+            // Handle failure if needed
+          }
+          if (status == DownloadTaskStatus.complete) {
+            print("Download Complete");
+            videosToRemove.add(video);
+
+            // downloadingVideos.remove(video);
+          }
+        }
+      }
+
+      // Future.delayed(Duration(seconds: 2),(){
       // print("inside removing for");
       for (DownloadingVideo video in videosToRemove) {
-      downloadingVideos.remove(video);
-    }
-    // });
+        downloadingVideos.remove(video);
+      }
+      // });
 
-    // for (DownloadingVideo video in videosToRemove) {
-    //   downloadingVideos.remove(video);
-    // }
+      // for (DownloadingVideo video in videosToRemove) {
+      //   downloadingVideos.remove(video);
+      // }
 
-    // Future.delayed(Duration(seconds: 4),(){
+      // Future.delayed(Duration(seconds: 4),(){
       // print("inside taskif if");
       if (taskId == id) {
-      print("Progress: $progress");
-      if (status == DownloadTaskStatus.complete) {
-        print("taskId download complete");
-        // Handle completion if needed
+        print("Progress: $progress");
+        if (status == DownloadTaskStatus.complete) {
+          print("taskId download complete");
+          // Handle completion if needed
+        }
+        if (status == DownloadTaskStatus.failed) {
+          print("Download Failed From Port..");
+        }
       }
-      if (status == DownloadTaskStatus.failed) {
-        print("Download Failed From Port..");
-      }
-    }
 
-    // });
+      // });
 
-    // if (taskId == id) {
-    //   print("Progress: $progress");
-    //   if (status == DownloadTaskStatus.complete) {
-    //     print("taskId download complete");
-    //     // Handle completion if needed
-    //   }
-    //   if (status == DownloadTaskStatus.failed) {
-    //     print("Download Failed From Port..");
-    //   }
-    // }
-  });
-}
+      // if (taskId == id) {
+      //   print("Progress: $progress");
+      //   if (status == DownloadTaskStatus.complete) {
+      //     print("taskId download complete");
+      //     // Handle completion if needed
+      //   }
+      //   if (status == DownloadTaskStatus.failed) {
+      //     print("Download Failed From Port..");
+      //   }
+      // }
+    });
+  }
 
 // Future downloadingBetween(id,progress,status,videosToRemove) async {
 //   for (DownloadingVideo video in downloadingVideos) {
@@ -191,7 +190,6 @@ class HomeController extends GetxController {
 //       }
 //     }
 // }
-
 
   // void _bindBackgroundIsolate() {
   //   bool isSuccess = IsolateNameServer.registerPortWithName(
@@ -375,10 +373,10 @@ class HomeController extends GetxController {
       );
       // downloadingVideos.add(downloadingTask);
       // Future.delayed(Duration(seconds: 1),(){
-        downloadingVideos.add(downloadingTask);
+      downloadingVideos.add(downloadingTask);
       // });
       // Future.delayed(Duration(seconds: 2),(){
-        videos.removeAt(index);
+      videos.removeAt(index);
       // });
       // videos.removeAt(index);
       print("video List: $videos");
@@ -547,6 +545,24 @@ class HomeController extends GetxController {
     print("Video List $videos");
   }
 
+  // void shareVideo(String videoPath) {
+  //   if (File(videoPath).existsSync()) {
+  //     XFile xFile = XFile(videoPath);
+  //     Share.shareXFiles([xFile], text: 'Check out this video!');
+  //   } else {
+  //     Get.snackbar('Error', 'Video file not found');
+  //   }
+  // }
+
+  // void deleteVideo() {
+  //   if (File(videoPath).existsSync()) {
+  //     File(videoPath).deleteSync();
+  //     Get.snackbar('Success', 'Video deleted successfully');
+  //     Get.back(); // Close the modal
+  //   } else {
+  //     Get.snackbar('Error', 'Unable to delete video');
+  //   }
+  // }
   void deleteVideo(DownloadedVideo downloadedVideo) {
     print("Deleting Video: $downloadedVideo");
     File(downloadedVideo.path).delete();
@@ -559,11 +575,11 @@ class HomeController extends GetxController {
       final mimeType =
           'video/mp4'; // Adjust the MIME type according to your video format
 
-      await Share.shareFiles(
-        [filePath],
+      await Share.shareXFiles(
+        [XFile(filePath)],
         text: 'Sharing Video',
         subject: 'Video Subject',
-        mimeTypes: [mimeType],
+        // mimeTypes: [mimeType],
       );
     } catch (e) {
       print("Error sharing video: $e");
@@ -1287,7 +1303,8 @@ class HomeController extends GetxController {
             width: SizeConfig.blockSizeHorizontal * 5,
             decoration: BoxDecoration(
                 // borderRadius: BorderRadius.circular(5), color: Colors.black),
-                borderRadius: BorderRadius.circular(5), color: AppColors.Text_color),
+                borderRadius: BorderRadius.circular(5),
+                color: AppColors.Text_color),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

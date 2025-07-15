@@ -1,0 +1,1 @@
+C:\IzzaTech\new-flutter-downloader\build\app\intermediates\cxx\RelWithDebInfo\6w2v4b53\obj\armeabi-v7a

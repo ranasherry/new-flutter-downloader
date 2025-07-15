@@ -1,0 +1,1 @@
+C:\IzzaTech\new-flutter-downloader\build\app\intermediates\cxx\Debug\6f1m224w\obj\arm64-v8a
